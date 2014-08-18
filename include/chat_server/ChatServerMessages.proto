@@ -1,0 +1,32 @@
+option optimize_for = LITE_RUNTIME;
+
+package avxer.chat;
+
+message UserLoginRequest {
+  required string login_name = 1;
+  required string login_passwd = 2;
+}
+
+message UserLoginResponse {
+  required int32 error_code = 1;
+}
+
+message UserLogoutRequest {}
+
+message AdminLoginRequest {}
+
+message AdminLogoutRequest {}
+
+message UserEnterNtfy {}
+
+message UserLeaveNtfy {}
+
+message RoomChatMessage {}
+
+message SystemChatMessage {}
+
+message PrivateChatMessage {}
+
+message KeepAliveNtfy {}
+
+message PingRequest {}

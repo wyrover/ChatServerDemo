@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="include\chat_server">
+      <UniqueIdentifier>{b7086ddf-029e-4552-a35d-c9b27731e305}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\include\chat_server\ChatServerMessages.pb.cc">
+      <Filter>include\chat_server</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\ChatRoom.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\ChatServer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Session.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\wapis.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\HttpClient.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\sdk\jsoncpp\jsoncpp.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\WapisInvokeResult.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\ChatUser.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\include\chat_server\ChatServerMessages.pb.h">
+      <Filter>include\chat_server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\chat_server\ChatServerPacket.h">
+      <Filter>include\chat_server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\ChatRoom.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\chat_server\Session.h">
+      <Filter>include\chat_server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\chat_server\Logger.h">
+      <Filter>include\chat_server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\chat_server\Macros.h">
+      <Filter>include\chat_server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\chat_server\TaskPool.h">
+      <Filter>include\chat_server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\chat_server\wapis.h">
+      <Filter>include\chat_server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\chat_server\HttpClient.h">
+      <Filter>include\chat_server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\chat_server\HttpRequest.h">
+      <Filter>include\chat_server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\chat_server\HttpResponse.h">
+      <Filter>include\chat_server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\chat_server\WapisInvokeResult.h">
+      <Filter>include\chat_server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\chat_server\ChatServerErrorCode.h">
+      <Filter>include\chat_server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\chat_server\ChatServerConfig.h">
+      <Filter>include\chat_server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\chat_server\ChatServer.h">
+      <Filter>include\chat_server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\chat_server\ChatUser.h">
+      <Filter>include\chat_server</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\include\chat_server\ChatServerMessages.proto">
+      <Filter>include\chat_server</Filter>
+    </None>
+  </ItemGroup>
+</Project>
