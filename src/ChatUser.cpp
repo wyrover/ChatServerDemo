@@ -4,73 +4,189 @@
 #include <chat_server/ChatServerErrorCode.h>
 #include <chat_server/Session.h>
 #include <chat_server/ChatServer.h>
+#include <chat_server/ChatRoom.h>
 #include <cassert>
 
-ChatUser::ChatUser(SessionPtr session, ChatServerPtr server)
-  : role_(SessionRole::Uncertified), session_(session), server_(server) {
+ChatUser::ChatUser(ChatServerPtr server)
+  : server_(server) {
 }
 
 ChatUser::~ChatUser() {
 }
 
-bool ChatUser::Initial() {
-  auto self(shared_from_this());
-  session_->set_on_message_cb(std::bind(&ChatUser::HandleMessage, self,
-    std::placeholders::_1, std::placeholders::_2,
-    std::placeholders::_3, std::placeholders::_4));
-  session_->set_on_close_cb(std::bind(&ChatUser::OnClose, self,
-    std::placeholders::_1));
+bool ChatUser::Initial(SessionPtr session) {
+  set_session(session);
   return true;
+}
+
+void ChatUser::set_session(SessionPtr session) { 
+  session_ = session;
+  std::weak_ptr<ChatUser> wself(shared_from_this());
+  session_->set_on_message_cb([wself](SessionPtr session,
+    uint16_t type,
+    const void* body,
+    int16_t size) -> bool {
+    if (ChatUserPtr self = wself.lock()) {
+      return self->HandleMessage(session, type, body, size);
+    } else {
+      return false;
+    }
+  });
+  session_->set_on_close_cb([wself](SessionPtr session) {
+    if (ChatUserPtr self = wself.lock()) {
+      self->OnClose(session);
+    }
+  });
+}
+
+void ChatUser::Write(uint16_t type, const MessageLite &message) {
+  if (session_ != nullptr) {
+    session_->Write(type, message);
+  }
 }
 
 bool ChatUser::HandleMessage(SessionPtr session,
                              uint16_t message_type,
                              const void *body,
                              int16_t size) {
-  if (MSG_USER_LOGIN_REQUEST == message_type) {
-    UserLoginRequest message;
-    message.ParseFromArray(body, size);
-    return HandleUserLogin(session, &message);
-  } else if (MSG_USER_LOGOUT == message_type) {
+  switch (message_type) {
+  case MSG_USER_LOGOUT:
+  {
     UserLogoutRequest message;
-    message.ParseFromArray(body, size);
-    return HandleUserLogout(session, &message);
-  } else {
-    return false;
+    if (!message.ParseFromArray(body, size)) {
+      break;
+    }
+    return HandleUserLogoutRequest(message);
   }
+  case MSG_CREAT_ROOM:
+  {
+    CreatRoomRequest message;
+    if (!message.ParseFromArray(body, size)) {
+      break;
+    }
+    return HandleCreatRoomRequest(message);
+  }
+  case MSG_ENTER_ROOM:
+  {
+    EnterRoomRequest message;
+    if (!message.ParseFromArray(body, size)) {
+      break;
+    }
+    return HandleEnterRoomRequest(message);
+  }
+  case MSG_GROUP_MSG:
+  {
+    GroupChatRequest message;
+    if (!message.ParseFromArray(body, size)) {
+      break;
+    }
+    return HandleGroupChatRequest(message);
+  }
+  case MSG_LEAVE_ROOM:
+  {
+    LeaveRoomRequest message;
+    if (!message.ParseFromArray(body, size)) {
+      break;
+    }
+    return HandleLeaveRoomRequest(message);
+  }
+    break;
+  default:
+    break;
+  }
+  return false;
 }
 
 void ChatUser::OnClose(SessionPtr session) {
-  CS_LOG_DEBUG(__FUNCTION__);
   server_->remove_user(shared_from_this());
 }
 
-bool ChatUser::HandleUserLogin(SessionPtr, UserLoginRequest *message) {
-  const std::string login_name = message->login_name();
-  const std::string login_passwd = message->login_passwd();
-  CS_LOG_DEBUG(__FUNCTION__ << ": " << login_name << ", " << login_passwd);
-  auto self(shared_from_this());
-  server_->task_pool().PutTask([self, login_name, login_passwd]() {
-    LoginResultPtr result = AccountService::Login(login_name, login_passwd);
-    self->server_->ios().post([self, result]() {
-      if (!self->server_->is_user_exist(self)) {
-        CS_LOG_DEBUG("session has closed before web service invoke completed");
-        return;
-      }
-      UserLoginResponse response;
-      if (result) {
-        response.set_error_code(result->error_code());
-      } else {
-        CS_LOG_ERROR("Internal server error");
-        response.set_error_code(EINTNLSRVCOMMU);
-      }
-      self->session_->Write(MSG_USER_LOGIN_RESPONSE, response);
-    });
-  });
+void ChatUser::SendEnterRoomResponse(int32_t error_code) {
+  EnterRoomResponse response;
+  response.set_error_code(error_code);
+  Write(MSG_ENTER_ROOM, response);
+}
+
+bool ChatUser::HandleUserLogoutRequest(UserLogoutRequest& message) {
+  return false;
+}
+
+bool ChatUser::HandleCreatRoomRequest(CreatRoomRequest& message) {
+  CreatRoomResponse response;
+  do 
+  {
+    if (server_->room_count() == server_->max_room_count()) {
+      response.set_error_code(ENOROOMRESOURCE);
+      break;
+    }
+    ChatRoomPtr room = server_->CreatRoom(user_id_, message.room_name(),
+                                          message.room_passwd(),
+                                          message.max_user_count());
+    entered_rooms_.insert(room->room_id());
+    response.set_error_code(ESUCCEED);
+    response.set_room_id(room->room_id());
+  } while (false);
+  Write(MSG_CREAT_ROOM, response);
   return true;
 }
 
-bool ChatUser::HandleUserLogout(SessionPtr, UserLogoutRequest *message) {
-  CS_LOG_DEBUG(__FUNCTION__);
-  return false;
+bool ChatUser::HandleEnterRoomRequest(EnterRoomRequest& message) {
+  ChatRoomPtr room = server_->FindRoom(message.room_id());
+  do
+  {
+    if (!room) {
+      SendEnterRoomResponse(EROOMNAMENOTEXIST);
+      break;
+    }
+    if (room->is_user_exist(user_id_)) {
+      SendEnterRoomResponse(EALREADYINTHISROOM);
+      break;
+    }
+    if (room->user_count() == room->max_user_count() ) {
+      SendEnterRoomResponse(EROOMFULL);
+      break;
+    }
+    if (room->room_passwd() != message.room_passwd()) {
+      SendEnterRoomResponse(EROOMPASSWDERR);
+      break;
+    }
+    room->add_user(user_id_);
+    entered_rooms_.insert(room->room_id());
+    SendEnterRoomResponse(ESUCCEED);
+
+    UserEnteredNtfy ntfy;
+    ntfy.set_user_id(user_id_);
+    ntfy.set_nick_name(user_id_);
+    room->BroadcastMessage(MSG_USER_ENTERED, ntfy);
+  } while (false);
+  return true;
+}
+
+bool ChatUser::HandleLeaveRoomRequest(LeaveRoomRequest& message) {
+  do {
+    auto iter = entered_rooms_.find(message.room_id());
+    if (iter == entered_rooms_.end()) {
+      CS_LOG_DEBUG("You have not entered that room");
+      break;
+    }
+    entered_rooms_.erase(iter);
+    on_leave_(user_id_);
+  } while (false);
+  return true;
+}
+
+bool ChatUser::HandleGroupChatRequest(GroupChatRequest& message) {
+  if (entered_rooms_.find(message.room_id()) == entered_rooms_.end()) {
+    CS_LOG_ERROR("You have not entered that room");
+    return true;
+  }
+  ChatRoomPtr room = server_->FindRoom(message.room_id());
+  if (room != nullptr) {
+    GroupChatNtfy ntfy;
+    ntfy.set_room_id(message.room_id());
+    ntfy.set_message_content(message.message_content());
+    ntfy.set_sender_user_id(user_id_);
+    room->BroadcastMessage(MSG_GROUP_MSG, ntfy);
+  }
+  return true;
 }

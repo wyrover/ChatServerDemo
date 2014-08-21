@@ -13,11 +13,10 @@ _INITIALIZE_EASYLOGGINGPP
 
 int main(int argc, char* argv[]) {
   el::Loggers::reconfigureAllLoggers(el::Configurations("./easylogging.conf"));
-
   ChatServerConfig conf;
   tcp::endpoint endpoint(tcp::v4(), conf.listen_port());
   boost::asio::io_service ios;
-  ChatServerPtr server = ChatServer::create(ios, endpoint);
+  ChatServerPtr server = ChatServer::create(ios, conf.max_room_count(), endpoint);
   if (!server) {
     CS_LOG_ERROR("chat server init failed");
     return -1;
@@ -38,6 +37,7 @@ int main(int argc, char* argv[]) {
       std::cout << "Unknown command!" << std::endl;
     }
   }
+  server->stop();
   ios.stop();
   loop.join();
   google::protobuf::ShutdownProtobufLibrary();

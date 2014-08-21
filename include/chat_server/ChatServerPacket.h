@@ -66,20 +66,24 @@ inline BufferPtr SerializeMessage(const MessageLite &message,
   return buffer;
 }
 
+typedef uint32_t room_id_t;
+typedef std::string user_id_t;
 
 enum {
-  MSG_USER_LOGIN_REQUEST = 1, /** 用户登录 */
-  MSG_USER_LOGIN_RESPONSE,    /** 用户登录 */
+  MSG_USER_LOGIN = 1, /** 用户登录 */
   MSG_USER_LOGOUT,    /** 用户注销 */
   MSG_ADMIN_LOGIN,    /** 管理员登录 */
   MSG_ADMIN_LOGOUT,   /** 管理员注销 */
-  MSG_USER_ENTER,     /** 用户进入 */
-  MSG_USER_LEAVE,     /** 用户离开 */
   MSG_GROUP_MSG,      /** 群消息 */
   MSG_SYS_MSG,        /** 系统消息 */
   MSG_PRIVATE_MSG,    /** 私聊消息 */
   MSG_KEEP_ALIVE,     /** 测试存活 */
   MSG_PING,           /** 测试网络延迟 */
+  MSG_CREAT_ROOM,     /** 创建聊天室 */
+  MSG_ENTER_ROOM,     /** 加入聊天室 */
+  MSG_LEAVE_ROOM,     /** 退出聊天室 */
+  MSG_USER_ENTERED,   /** 用户进入事件 */
+  MSG_USER_LEAVED,    /** 用户退出事件 */
 };
 
 #endif /* CHAT_SERVER_CHATSERVERPACKET_H */

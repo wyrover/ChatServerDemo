@@ -2,14 +2,15 @@
 #define CHATCLIENT_H
 
 #include <memory>
-#include <boost/asio.hpp>
 #include <cstdio>
-#include <chat_server/ChatServerPacket.h>
-#include <chat_server/Session.h>
+#include <boost/asio.hpp>
 #include <chat_server/Logger.h>
+#include <chat_server/Session.h>
+#include <chat_server/ChatServerPacket.h>
+#include <chat_server/ChatServerErrorCode.h>
 
 using boost::asio::ip::tcp;
-using namespace avxer::chat;
+using namespace com::avxer::chat;
 
 class ChatClient : public std::enable_shared_from_this<ChatClient> {
 public:
@@ -30,6 +31,9 @@ public:
 
   void Login(const std::string &login_name, const std::string &login_passwd);
   void Logout();
+  void CreatRoom(const std::string &room_name, const std::string& room_passwd, uint32_t max_user_count);
+  void EnterRoom(const room_id_t& room_id, const std::string& room_passwd);
+  void SendGroupMessage(const room_id_t& room_id, const void* data, uint32_t size);
 
 private:
   bool Initial(tcp::resolver::iterator endpoint_iterator) {
@@ -55,6 +59,11 @@ private:
   void OnClose(SessionPtr session);
 
   bool HandleUserLoginResponse(const UserLoginResponse& response);
+  bool HandleCreatRoomResponse(const CreatRoomResponse& message);
+  bool HandleEnterRoomResponse(const EnterRoomResponse& message);
+  bool HandleUserEntered(const UserEnteredNtfy& message);
+  bool HandleUserLeaved(const UserLeavedNtfy& message);
+  bool HandleGroupMessage(const GroupChatNtfy& message);
 
 private:
   boost::asio::io_service &ios_;

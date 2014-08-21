@@ -12,28 +12,28 @@ from google.protobuf import descriptor_pb2
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='ChatServerMessages.proto',
-  package='avxer.chat',
-  serialized_pb='\n\x18\x43hatServerMessages.proto\x12\navxer.chat\"<\n\x10UserLoginRequest\x12\x12\n\nlogin_name\x18\x01 \x02(\t\x12\x14\n\x0clogin_passwd\x18\x02 \x02(\t\"\'\n\x11UserLoginResponse\x12\x12\n\nerror_code\x18\x01 \x02(\x05\"\x13\n\x11UserLogoutRequest\"\x13\n\x11\x41\x64minLoginRequest\"\x14\n\x12\x41\x64minLogoutRequest\"\x0f\n\rUserEnterNtfy\"\x0f\n\rUserLeaveNtfy\"\x11\n\x0fRoomChatMessage\"\x13\n\x11SystemChatMessage\"\x14\n\x12PrivateChatMessage\"\x0f\n\rKeepAliveNtfy\"\r\n\x0bPingRequestB\x02H\x03')
+  package='com.avxer.chat',
+  serialized_pb='\n\x18\x43hatServerMessages.proto\x12\x0e\x63om.avxer.chat\"<\n\x10UserLoginRequest\x12\x12\n\nlogin_name\x18\x01 \x02(\t\x12\x14\n\x0clogin_passwd\x18\x02 \x02(\t\"\'\n\x11UserLoginResponse\x12\x12\n\nerror_code\x18\x01 \x02(\x05\"\x13\n\x11UserLogoutRequest\"R\n\x10\x43reatRoomRequest\x12\x16\n\x0emax_user_count\x18\x01 \x02(\r\x12\x11\n\troom_name\x18\x02 \x01(\t\x12\x13\n\x0broom_passwd\x18\x03 \x01(\t\"8\n\x11\x43reatRoomResponse\x12\x12\n\nerror_code\x18\x01 \x02(\x05\x12\x0f\n\x07room_id\x18\x02 \x01(\r\"8\n\x10\x45nterRoomRequest\x12\x0f\n\x07room_id\x18\x01 \x02(\r\x12\x13\n\x0broom_passwd\x18\x02 \x01(\t\"\'\n\x11\x45nterRoomResponse\x12\x12\n\nerror_code\x18\x01 \x02(\x05\"<\n\x10GroupChatRequest\x12\x0f\n\x07room_id\x18\x01 \x02(\r\x12\x17\n\x0fmessage_content\x18\x02 \x02(\x0c\"Q\n\rGroupChatNtfy\x12\x0f\n\x07room_id\x18\x01 \x02(\r\x12\x17\n\x0fmessage_content\x18\x02 \x02(\x0c\x12\x16\n\x0esender_user_id\x18\x03 \x02(\t\"5\n\x0fUserEnteredNtfy\x12\x0f\n\x07user_id\x18\x01 \x02(\t\x12\x11\n\tnick_name\x18\x02 \x02(\t\"#\n\x10LeaveRoomRequest\x12\x0f\n\x07room_id\x18\x01 \x02(\r\"!\n\x0eUserLeavedNtfy\x12\x0f\n\x07user_id\x18\x01 \x02(\tB\x02H\x03')
 
 
 
 
 _USERLOGINREQUEST = _descriptor.Descriptor(
   name='UserLoginRequest',
-  full_name='avxer.chat.UserLoginRequest',
+  full_name='com.avxer.chat.UserLoginRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='login_name', full_name='avxer.chat.UserLoginRequest.login_name', index=0,
+      name='login_name', full_name='com.avxer.chat.UserLoginRequest.login_name', index=0,
       number=1, type=9, cpp_type=9, label=2,
       has_default_value=False, default_value=unicode("", "utf-8"),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='login_passwd', full_name='avxer.chat.UserLoginRequest.login_passwd', index=1,
+      name='login_passwd', full_name='com.avxer.chat.UserLoginRequest.login_passwd', index=1,
       number=2, type=9, cpp_type=9, label=2,
       has_default_value=False, default_value=unicode("", "utf-8"),
       message_type=None, enum_type=None, containing_type=None,
@@ -48,20 +48,20 @@ _USERLOGINREQUEST = _descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=40,
-  serialized_end=100,
+  serialized_start=44,
+  serialized_end=104,
 )
 
 
 _USERLOGINRESPONSE = _descriptor.Descriptor(
   name='UserLoginResponse',
-  full_name='avxer.chat.UserLoginResponse',
+  full_name='com.avxer.chat.UserLoginResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='error_code', full_name='avxer.chat.UserLoginResponse.error_code', index=0,
+      name='error_code', full_name='com.avxer.chat.UserLoginResponse.error_code', index=0,
       number=1, type=5, cpp_type=1, label=2,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -76,14 +76,14 @@ _USERLOGINRESPONSE = _descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=102,
-  serialized_end=141,
+  serialized_start=106,
+  serialized_end=145,
 )
 
 
 _USERLOGOUTREQUEST = _descriptor.Descriptor(
   name='UserLogoutRequest',
-  full_name='avxer.chat.UserLogoutRequest',
+  full_name='com.avxer.chat.UserLogoutRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
@@ -97,18 +97,39 @@ _USERLOGOUTREQUEST = _descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=143,
-  serialized_end=162,
+  serialized_start=147,
+  serialized_end=166,
 )
 
 
-_ADMINLOGINREQUEST = _descriptor.Descriptor(
-  name='AdminLoginRequest',
-  full_name='avxer.chat.AdminLoginRequest',
+_CREATROOMREQUEST = _descriptor.Descriptor(
+  name='CreatRoomRequest',
+  full_name='com.avxer.chat.CreatRoomRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
+    _descriptor.FieldDescriptor(
+      name='max_user_count', full_name='com.avxer.chat.CreatRoomRequest.max_user_count', index=0,
+      number=1, type=13, cpp_type=3, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='room_name', full_name='com.avxer.chat.CreatRoomRequest.room_name', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=unicode("", "utf-8"),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='room_passwd', full_name='com.avxer.chat.CreatRoomRequest.room_passwd', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=unicode("", "utf-8"),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -118,18 +139,32 @@ _ADMINLOGINREQUEST = _descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=164,
-  serialized_end=183,
+  serialized_start=168,
+  serialized_end=250,
 )
 
 
-_ADMINLOGOUTREQUEST = _descriptor.Descriptor(
-  name='AdminLogoutRequest',
-  full_name='avxer.chat.AdminLogoutRequest',
+_CREATROOMRESPONSE = _descriptor.Descriptor(
+  name='CreatRoomResponse',
+  full_name='com.avxer.chat.CreatRoomResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
+    _descriptor.FieldDescriptor(
+      name='error_code', full_name='com.avxer.chat.CreatRoomResponse.error_code', index=0,
+      number=1, type=5, cpp_type=1, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='room_id', full_name='com.avxer.chat.CreatRoomResponse.room_id', index=1,
+      number=2, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -139,18 +174,32 @@ _ADMINLOGOUTREQUEST = _descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=185,
-  serialized_end=205,
+  serialized_start=252,
+  serialized_end=308,
 )
 
 
-_USERENTERNTFY = _descriptor.Descriptor(
-  name='UserEnterNtfy',
-  full_name='avxer.chat.UserEnterNtfy',
+_ENTERROOMREQUEST = _descriptor.Descriptor(
+  name='EnterRoomRequest',
+  full_name='com.avxer.chat.EnterRoomRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
+    _descriptor.FieldDescriptor(
+      name='room_id', full_name='com.avxer.chat.EnterRoomRequest.room_id', index=0,
+      number=1, type=13, cpp_type=3, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='room_passwd', full_name='com.avxer.chat.EnterRoomRequest.room_passwd', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=unicode("", "utf-8"),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -160,18 +209,25 @@ _USERENTERNTFY = _descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=207,
-  serialized_end=222,
+  serialized_start=310,
+  serialized_end=366,
 )
 
 
-_USERLEAVENTFY = _descriptor.Descriptor(
-  name='UserLeaveNtfy',
-  full_name='avxer.chat.UserLeaveNtfy',
+_ENTERROOMRESPONSE = _descriptor.Descriptor(
+  name='EnterRoomResponse',
+  full_name='com.avxer.chat.EnterRoomResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
+    _descriptor.FieldDescriptor(
+      name='error_code', full_name='com.avxer.chat.EnterRoomResponse.error_code', index=0,
+      number=1, type=5, cpp_type=1, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -181,18 +237,32 @@ _USERLEAVENTFY = _descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=224,
-  serialized_end=239,
+  serialized_start=368,
+  serialized_end=407,
 )
 
 
-_ROOMCHATMESSAGE = _descriptor.Descriptor(
-  name='RoomChatMessage',
-  full_name='avxer.chat.RoomChatMessage',
+_GROUPCHATREQUEST = _descriptor.Descriptor(
+  name='GroupChatRequest',
+  full_name='com.avxer.chat.GroupChatRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
+    _descriptor.FieldDescriptor(
+      name='room_id', full_name='com.avxer.chat.GroupChatRequest.room_id', index=0,
+      number=1, type=13, cpp_type=3, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='message_content', full_name='com.avxer.chat.GroupChatRequest.message_content', index=1,
+      number=2, type=12, cpp_type=9, label=2,
+      has_default_value=False, default_value="",
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -202,18 +272,39 @@ _ROOMCHATMESSAGE = _descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=241,
-  serialized_end=258,
+  serialized_start=409,
+  serialized_end=469,
 )
 
 
-_SYSTEMCHATMESSAGE = _descriptor.Descriptor(
-  name='SystemChatMessage',
-  full_name='avxer.chat.SystemChatMessage',
+_GROUPCHATNTFY = _descriptor.Descriptor(
+  name='GroupChatNtfy',
+  full_name='com.avxer.chat.GroupChatNtfy',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
+    _descriptor.FieldDescriptor(
+      name='room_id', full_name='com.avxer.chat.GroupChatNtfy.room_id', index=0,
+      number=1, type=13, cpp_type=3, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='message_content', full_name='com.avxer.chat.GroupChatNtfy.message_content', index=1,
+      number=2, type=12, cpp_type=9, label=2,
+      has_default_value=False, default_value="",
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='sender_user_id', full_name='com.avxer.chat.GroupChatNtfy.sender_user_id', index=2,
+      number=3, type=9, cpp_type=9, label=2,
+      has_default_value=False, default_value=unicode("", "utf-8"),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -223,18 +314,32 @@ _SYSTEMCHATMESSAGE = _descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=260,
-  serialized_end=279,
+  serialized_start=471,
+  serialized_end=552,
 )
 
 
-_PRIVATECHATMESSAGE = _descriptor.Descriptor(
-  name='PrivateChatMessage',
-  full_name='avxer.chat.PrivateChatMessage',
+_USERENTEREDNTFY = _descriptor.Descriptor(
+  name='UserEnteredNtfy',
+  full_name='com.avxer.chat.UserEnteredNtfy',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
+    _descriptor.FieldDescriptor(
+      name='user_id', full_name='com.avxer.chat.UserEnteredNtfy.user_id', index=0,
+      number=1, type=9, cpp_type=9, label=2,
+      has_default_value=False, default_value=unicode("", "utf-8"),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='nick_name', full_name='com.avxer.chat.UserEnteredNtfy.nick_name', index=1,
+      number=2, type=9, cpp_type=9, label=2,
+      has_default_value=False, default_value=unicode("", "utf-8"),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -244,18 +349,25 @@ _PRIVATECHATMESSAGE = _descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=281,
-  serialized_end=301,
+  serialized_start=554,
+  serialized_end=607,
 )
 
 
-_KEEPALIVENTFY = _descriptor.Descriptor(
-  name='KeepAliveNtfy',
-  full_name='avxer.chat.KeepAliveNtfy',
+_LEAVEROOMREQUEST = _descriptor.Descriptor(
+  name='LeaveRoomRequest',
+  full_name='com.avxer.chat.LeaveRoomRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
+    _descriptor.FieldDescriptor(
+      name='room_id', full_name='com.avxer.chat.LeaveRoomRequest.room_id', index=0,
+      number=1, type=13, cpp_type=3, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -265,18 +377,25 @@ _KEEPALIVENTFY = _descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=303,
-  serialized_end=318,
+  serialized_start=609,
+  serialized_end=644,
 )
 
 
-_PINGREQUEST = _descriptor.Descriptor(
-  name='PingRequest',
-  full_name='avxer.chat.PingRequest',
+_USERLEAVEDNTFY = _descriptor.Descriptor(
+  name='UserLeavedNtfy',
+  full_name='com.avxer.chat.UserLeavedNtfy',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
+    _descriptor.FieldDescriptor(
+      name='user_id', full_name='com.avxer.chat.UserLeavedNtfy.user_id', index=0,
+      number=1, type=9, cpp_type=9, label=2,
+      has_default_value=False, default_value=unicode("", "utf-8"),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -286,94 +405,94 @@ _PINGREQUEST = _descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=320,
-  serialized_end=333,
+  serialized_start=646,
+  serialized_end=679,
 )
 
 DESCRIPTOR.message_types_by_name['UserLoginRequest'] = _USERLOGINREQUEST
 DESCRIPTOR.message_types_by_name['UserLoginResponse'] = _USERLOGINRESPONSE
 DESCRIPTOR.message_types_by_name['UserLogoutRequest'] = _USERLOGOUTREQUEST
-DESCRIPTOR.message_types_by_name['AdminLoginRequest'] = _ADMINLOGINREQUEST
-DESCRIPTOR.message_types_by_name['AdminLogoutRequest'] = _ADMINLOGOUTREQUEST
-DESCRIPTOR.message_types_by_name['UserEnterNtfy'] = _USERENTERNTFY
-DESCRIPTOR.message_types_by_name['UserLeaveNtfy'] = _USERLEAVENTFY
-DESCRIPTOR.message_types_by_name['RoomChatMessage'] = _ROOMCHATMESSAGE
-DESCRIPTOR.message_types_by_name['SystemChatMessage'] = _SYSTEMCHATMESSAGE
-DESCRIPTOR.message_types_by_name['PrivateChatMessage'] = _PRIVATECHATMESSAGE
-DESCRIPTOR.message_types_by_name['KeepAliveNtfy'] = _KEEPALIVENTFY
-DESCRIPTOR.message_types_by_name['PingRequest'] = _PINGREQUEST
+DESCRIPTOR.message_types_by_name['CreatRoomRequest'] = _CREATROOMREQUEST
+DESCRIPTOR.message_types_by_name['CreatRoomResponse'] = _CREATROOMRESPONSE
+DESCRIPTOR.message_types_by_name['EnterRoomRequest'] = _ENTERROOMREQUEST
+DESCRIPTOR.message_types_by_name['EnterRoomResponse'] = _ENTERROOMRESPONSE
+DESCRIPTOR.message_types_by_name['GroupChatRequest'] = _GROUPCHATREQUEST
+DESCRIPTOR.message_types_by_name['GroupChatNtfy'] = _GROUPCHATNTFY
+DESCRIPTOR.message_types_by_name['UserEnteredNtfy'] = _USERENTEREDNTFY
+DESCRIPTOR.message_types_by_name['LeaveRoomRequest'] = _LEAVEROOMREQUEST
+DESCRIPTOR.message_types_by_name['UserLeavedNtfy'] = _USERLEAVEDNTFY
 
 class UserLoginRequest(_message.Message):
   __metaclass__ = _reflection.GeneratedProtocolMessageType
   DESCRIPTOR = _USERLOGINREQUEST
 
-  # @@protoc_insertion_point(class_scope:avxer.chat.UserLoginRequest)
+  # @@protoc_insertion_point(class_scope:com.avxer.chat.UserLoginRequest)
 
 class UserLoginResponse(_message.Message):
   __metaclass__ = _reflection.GeneratedProtocolMessageType
   DESCRIPTOR = _USERLOGINRESPONSE
 
-  # @@protoc_insertion_point(class_scope:avxer.chat.UserLoginResponse)
+  # @@protoc_insertion_point(class_scope:com.avxer.chat.UserLoginResponse)
 
 class UserLogoutRequest(_message.Message):
   __metaclass__ = _reflection.GeneratedProtocolMessageType
   DESCRIPTOR = _USERLOGOUTREQUEST
 
-  # @@protoc_insertion_point(class_scope:avxer.chat.UserLogoutRequest)
+  # @@protoc_insertion_point(class_scope:com.avxer.chat.UserLogoutRequest)
 
-class AdminLoginRequest(_message.Message):
+class CreatRoomRequest(_message.Message):
   __metaclass__ = _reflection.GeneratedProtocolMessageType
-  DESCRIPTOR = _ADMINLOGINREQUEST
+  DESCRIPTOR = _CREATROOMREQUEST
 
-  # @@protoc_insertion_point(class_scope:avxer.chat.AdminLoginRequest)
+  # @@protoc_insertion_point(class_scope:com.avxer.chat.CreatRoomRequest)
 
-class AdminLogoutRequest(_message.Message):
+class CreatRoomResponse(_message.Message):
   __metaclass__ = _reflection.GeneratedProtocolMessageType
-  DESCRIPTOR = _ADMINLOGOUTREQUEST
+  DESCRIPTOR = _CREATROOMRESPONSE
 
-  # @@protoc_insertion_point(class_scope:avxer.chat.AdminLogoutRequest)
+  # @@protoc_insertion_point(class_scope:com.avxer.chat.CreatRoomResponse)
 
-class UserEnterNtfy(_message.Message):
+class EnterRoomRequest(_message.Message):
   __metaclass__ = _reflection.GeneratedProtocolMessageType
-  DESCRIPTOR = _USERENTERNTFY
+  DESCRIPTOR = _ENTERROOMREQUEST
 
-  # @@protoc_insertion_point(class_scope:avxer.chat.UserEnterNtfy)
+  # @@protoc_insertion_point(class_scope:com.avxer.chat.EnterRoomRequest)
 
-class UserLeaveNtfy(_message.Message):
+class EnterRoomResponse(_message.Message):
   __metaclass__ = _reflection.GeneratedProtocolMessageType
-  DESCRIPTOR = _USERLEAVENTFY
+  DESCRIPTOR = _ENTERROOMRESPONSE
 
-  # @@protoc_insertion_point(class_scope:avxer.chat.UserLeaveNtfy)
+  # @@protoc_insertion_point(class_scope:com.avxer.chat.EnterRoomResponse)
 
-class RoomChatMessage(_message.Message):
+class GroupChatRequest(_message.Message):
   __metaclass__ = _reflection.GeneratedProtocolMessageType
-  DESCRIPTOR = _ROOMCHATMESSAGE
+  DESCRIPTOR = _GROUPCHATREQUEST
 
-  # @@protoc_insertion_point(class_scope:avxer.chat.RoomChatMessage)
+  # @@protoc_insertion_point(class_scope:com.avxer.chat.GroupChatRequest)
 
-class SystemChatMessage(_message.Message):
+class GroupChatNtfy(_message.Message):
   __metaclass__ = _reflection.GeneratedProtocolMessageType
-  DESCRIPTOR = _SYSTEMCHATMESSAGE
+  DESCRIPTOR = _GROUPCHATNTFY
 
-  # @@protoc_insertion_point(class_scope:avxer.chat.SystemChatMessage)
+  # @@protoc_insertion_point(class_scope:com.avxer.chat.GroupChatNtfy)
 
-class PrivateChatMessage(_message.Message):
+class UserEnteredNtfy(_message.Message):
   __metaclass__ = _reflection.GeneratedProtocolMessageType
-  DESCRIPTOR = _PRIVATECHATMESSAGE
+  DESCRIPTOR = _USERENTEREDNTFY
 
-  # @@protoc_insertion_point(class_scope:avxer.chat.PrivateChatMessage)
+  # @@protoc_insertion_point(class_scope:com.avxer.chat.UserEnteredNtfy)
 
-class KeepAliveNtfy(_message.Message):
+class LeaveRoomRequest(_message.Message):
   __metaclass__ = _reflection.GeneratedProtocolMessageType
-  DESCRIPTOR = _KEEPALIVENTFY
+  DESCRIPTOR = _LEAVEROOMREQUEST
 
-  # @@protoc_insertion_point(class_scope:avxer.chat.KeepAliveNtfy)
+  # @@protoc_insertion_point(class_scope:com.avxer.chat.LeaveRoomRequest)
 
-class PingRequest(_message.Message):
+class UserLeavedNtfy(_message.Message):
   __metaclass__ = _reflection.GeneratedProtocolMessageType
-  DESCRIPTOR = _PINGREQUEST
+  DESCRIPTOR = _USERLEAVEDNTFY
 
-  # @@protoc_insertion_point(class_scope:avxer.chat.PingRequest)
+  # @@protoc_insertion_point(class_scope:com.avxer.chat.UserLeavedNtfy)
 
 
 DESCRIPTOR.has_options = True

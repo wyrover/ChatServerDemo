@@ -52,9 +52,6 @@
     <ClInclude Include="..\..\include\chat_server\ChatServerPacket.h">
       <Filter>include\chat_server</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\ChatRoom.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\chat_server\Session.h">
       <Filter>include\chat_server</Filter>
     </ClInclude>
@@ -92,6 +89,12 @@
       <Filter>include\chat_server</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\chat_server\ChatUser.h">
+      <Filter>include\chat_server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\chat_server\ChatRoom.h">
+      <Filter>include\chat_server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\chat_server\robin_id.h">
       <Filter>include\chat_server</Filter>
     </ClInclude>
   </ItemGroup>

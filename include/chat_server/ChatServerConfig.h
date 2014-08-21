@@ -19,14 +19,16 @@ public:
       CS_LOG_FATAL("config file parse failed");
     }
     listen_port_ = root["listen_port"].asInt();
+    max_room_count_ = root["max_room_count"].asInt();
   }
 
-  uint16_t listen_port() const {
-    return listen_port_;
-  }
+  uint16_t listen_port() const { return listen_port_; }
+
+  uint32_t max_room_count() const { return max_room_count_; }
 
 private:
   uint16_t listen_port_;
+  uint32_t max_room_count_;
 };
 
 #endif /* CHATSERVERCONFIG_H */

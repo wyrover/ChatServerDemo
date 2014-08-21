@@ -25,6 +25,7 @@
 #include <google/protobuf/extension_set.h>
 // @@protoc_insertion_point(includes)
 
+namespace com {
 namespace avxer {
 namespace chat {
 
@@ -36,15 +37,15 @@ void protobuf_ShutdownFile_ChatServerMessages_2eproto();
 class UserLoginRequest;
 class UserLoginResponse;
 class UserLogoutRequest;
-class AdminLoginRequest;
-class AdminLogoutRequest;
-class UserEnterNtfy;
-class UserLeaveNtfy;
-class RoomChatMessage;
-class SystemChatMessage;
-class PrivateChatMessage;
-class KeepAliveNtfy;
-class PingRequest;
+class CreatRoomRequest;
+class CreatRoomResponse;
+class EnterRoomRequest;
+class EnterRoomResponse;
+class GroupChatRequest;
+class GroupChatNtfy;
+class UserEnteredNtfy;
+class LeaveRoomRequest;
+class UserLeavedNtfy;
 
 // ===================================================================
 
@@ -125,7 +126,7 @@ class UserLoginRequest : public ::google::protobuf::MessageLite {
   inline ::std::string* release_login_passwd();
   inline void set_allocated_login_passwd(::std::string* login_passwd);
 
-  // @@protoc_insertion_point(class_scope:avxer.chat.UserLoginRequest)
+  // @@protoc_insertion_point(class_scope:com.avxer.chat.UserLoginRequest)
  private:
   inline void set_has_login_name();
   inline void clear_has_login_name();
@@ -211,7 +212,7 @@ class UserLoginResponse : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::int32 error_code() const;
   inline void set_error_code(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:avxer.chat.UserLoginResponse)
+  // @@protoc_insertion_point(class_scope:com.avxer.chat.UserLoginResponse)
  private:
   inline void set_has_error_code();
   inline void clear_has_error_code();
@@ -287,7 +288,7 @@ class UserLogoutRequest : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // @@protoc_insertion_point(class_scope:avxer.chat.UserLogoutRequest)
+  // @@protoc_insertion_point(class_scope:com.avxer.chat.UserLogoutRequest)
  private:
 
 
@@ -307,38 +308,38 @@ class UserLogoutRequest : public ::google::protobuf::MessageLite {
 };
 // -------------------------------------------------------------------
 
-class AdminLoginRequest : public ::google::protobuf::MessageLite {
+class CreatRoomRequest : public ::google::protobuf::MessageLite {
  public:
-  AdminLoginRequest();
-  virtual ~AdminLoginRequest();
+  CreatRoomRequest();
+  virtual ~CreatRoomRequest();
 
-  AdminLoginRequest(const AdminLoginRequest& from);
+  CreatRoomRequest(const CreatRoomRequest& from);
 
-  inline AdminLoginRequest& operator=(const AdminLoginRequest& from) {
+  inline CreatRoomRequest& operator=(const CreatRoomRequest& from) {
     CopyFrom(from);
     return *this;
   }
 
-  static const AdminLoginRequest& default_instance();
+  static const CreatRoomRequest& default_instance();
 
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   // Returns the internal default instance pointer. This function can
   // return NULL thus should not be used by the user. This is intended
   // for Protobuf internal code. Please use default_instance() declared
   // above instead.
-  static inline const AdminLoginRequest* internal_default_instance() {
+  static inline const CreatRoomRequest* internal_default_instance() {
     return default_instance_;
   }
   #endif
 
-  void Swap(AdminLoginRequest* other);
+  void Swap(CreatRoomRequest* other);
 
   // implements Message ----------------------------------------------
 
-  AdminLoginRequest* New() const;
+  CreatRoomRequest* New() const;
   void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
-  void CopyFrom(const AdminLoginRequest& from);
-  void MergeFrom(const AdminLoginRequest& from);
+  void CopyFrom(const CreatRoomRequest& from);
+  void MergeFrom(const CreatRoomRequest& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -360,12 +361,52 @@ class AdminLoginRequest : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // @@protoc_insertion_point(class_scope:avxer.chat.AdminLoginRequest)
- private:
+  // required uint32 max_user_count = 1;
+  inline bool has_max_user_count() const;
+  inline void clear_max_user_count();
+  static const int kMaxUserCountFieldNumber = 1;
+  inline ::google::protobuf::uint32 max_user_count() const;
+  inline void set_max_user_count(::google::protobuf::uint32 value);
 
+  // optional string room_name = 2;
+  inline bool has_room_name() const;
+  inline void clear_room_name();
+  static const int kRoomNameFieldNumber = 2;
+  inline const ::std::string& room_name() const;
+  inline void set_room_name(const ::std::string& value);
+  inline void set_room_name(const char* value);
+  inline void set_room_name(const char* value, size_t size);
+  inline ::std::string* mutable_room_name();
+  inline ::std::string* release_room_name();
+  inline void set_allocated_room_name(::std::string* room_name);
+
+  // optional string room_passwd = 3;
+  inline bool has_room_passwd() const;
+  inline void clear_room_passwd();
+  static const int kRoomPasswdFieldNumber = 3;
+  inline const ::std::string& room_passwd() const;
+  inline void set_room_passwd(const ::std::string& value);
+  inline void set_room_passwd(const char* value);
+  inline void set_room_passwd(const char* value, size_t size);
+  inline ::std::string* mutable_room_passwd();
+  inline ::std::string* release_room_passwd();
+  inline void set_allocated_room_passwd(::std::string* room_passwd);
+
+  // @@protoc_insertion_point(class_scope:com.avxer.chat.CreatRoomRequest)
+ private:
+  inline void set_has_max_user_count();
+  inline void clear_has_max_user_count();
+  inline void set_has_room_name();
+  inline void clear_has_room_name();
+  inline void set_has_room_passwd();
+  inline void clear_has_room_passwd();
+
+  ::std::string* room_name_;
+  ::std::string* room_passwd_;
+  ::google::protobuf::uint32 max_user_count_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[1];
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
 
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_ChatServerMessages_2eproto_impl();
@@ -376,42 +417,42 @@ class AdminLoginRequest : public ::google::protobuf::MessageLite {
   friend void protobuf_ShutdownFile_ChatServerMessages_2eproto();
 
   void InitAsDefaultInstance();
-  static AdminLoginRequest* default_instance_;
+  static CreatRoomRequest* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class AdminLogoutRequest : public ::google::protobuf::MessageLite {
+class CreatRoomResponse : public ::google::protobuf::MessageLite {
  public:
-  AdminLogoutRequest();
-  virtual ~AdminLogoutRequest();
+  CreatRoomResponse();
+  virtual ~CreatRoomResponse();
 
-  AdminLogoutRequest(const AdminLogoutRequest& from);
+  CreatRoomResponse(const CreatRoomResponse& from);
 
-  inline AdminLogoutRequest& operator=(const AdminLogoutRequest& from) {
+  inline CreatRoomResponse& operator=(const CreatRoomResponse& from) {
     CopyFrom(from);
     return *this;
   }
 
-  static const AdminLogoutRequest& default_instance();
+  static const CreatRoomResponse& default_instance();
 
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   // Returns the internal default instance pointer. This function can
   // return NULL thus should not be used by the user. This is intended
   // for Protobuf internal code. Please use default_instance() declared
   // above instead.
-  static inline const AdminLogoutRequest* internal_default_instance() {
+  static inline const CreatRoomResponse* internal_default_instance() {
     return default_instance_;
   }
   #endif
 
-  void Swap(AdminLogoutRequest* other);
+  void Swap(CreatRoomResponse* other);
 
   // implements Message ----------------------------------------------
 
-  AdminLogoutRequest* New() const;
+  CreatRoomResponse* New() const;
   void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
-  void CopyFrom(const AdminLogoutRequest& from);
-  void MergeFrom(const AdminLogoutRequest& from);
+  void CopyFrom(const CreatRoomResponse& from);
+  void MergeFrom(const CreatRoomResponse& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -433,12 +474,32 @@ class AdminLogoutRequest : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // @@protoc_insertion_point(class_scope:avxer.chat.AdminLogoutRequest)
- private:
+  // required int32 error_code = 1;
+  inline bool has_error_code() const;
+  inline void clear_error_code();
+  static const int kErrorCodeFieldNumber = 1;
+  inline ::google::protobuf::int32 error_code() const;
+  inline void set_error_code(::google::protobuf::int32 value);
 
+  // optional uint32 room_id = 2;
+  inline bool has_room_id() const;
+  inline void clear_room_id();
+  static const int kRoomIdFieldNumber = 2;
+  inline ::google::protobuf::uint32 room_id() const;
+  inline void set_room_id(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:com.avxer.chat.CreatRoomResponse)
+ private:
+  inline void set_has_error_code();
+  inline void clear_has_error_code();
+  inline void set_has_room_id();
+  inline void clear_has_room_id();
+
+  ::google::protobuf::int32 error_code_;
+  ::google::protobuf::uint32 room_id_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[1];
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
 
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_ChatServerMessages_2eproto_impl();
@@ -449,42 +510,42 @@ class AdminLogoutRequest : public ::google::protobuf::MessageLite {
   friend void protobuf_ShutdownFile_ChatServerMessages_2eproto();
 
   void InitAsDefaultInstance();
-  static AdminLogoutRequest* default_instance_;
+  static CreatRoomResponse* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class UserEnterNtfy : public ::google::protobuf::MessageLite {
+class EnterRoomRequest : public ::google::protobuf::MessageLite {
  public:
-  UserEnterNtfy();
-  virtual ~UserEnterNtfy();
+  EnterRoomRequest();
+  virtual ~EnterRoomRequest();
 
-  UserEnterNtfy(const UserEnterNtfy& from);
+  EnterRoomRequest(const EnterRoomRequest& from);
 
-  inline UserEnterNtfy& operator=(const UserEnterNtfy& from) {
+  inline EnterRoomRequest& operator=(const EnterRoomRequest& from) {
     CopyFrom(from);
     return *this;
   }
 
-  static const UserEnterNtfy& default_instance();
+  static const EnterRoomRequest& default_instance();
 
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   // Returns the internal default instance pointer. This function can
   // return NULL thus should not be used by the user. This is intended
   // for Protobuf internal code. Please use default_instance() declared
   // above instead.
-  static inline const UserEnterNtfy* internal_default_instance() {
+  static inline const EnterRoomRequest* internal_default_instance() {
     return default_instance_;
   }
   #endif
 
-  void Swap(UserEnterNtfy* other);
+  void Swap(EnterRoomRequest* other);
 
   // implements Message ----------------------------------------------
 
-  UserEnterNtfy* New() const;
+  EnterRoomRequest* New() const;
   void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
-  void CopyFrom(const UserEnterNtfy& from);
-  void MergeFrom(const UserEnterNtfy& from);
+  void CopyFrom(const EnterRoomRequest& from);
+  void MergeFrom(const EnterRoomRequest& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -506,12 +567,37 @@ class UserEnterNtfy : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // @@protoc_insertion_point(class_scope:avxer.chat.UserEnterNtfy)
- private:
+  // required uint32 room_id = 1;
+  inline bool has_room_id() const;
+  inline void clear_room_id();
+  static const int kRoomIdFieldNumber = 1;
+  inline ::google::protobuf::uint32 room_id() const;
+  inline void set_room_id(::google::protobuf::uint32 value);
 
+  // optional string room_passwd = 2;
+  inline bool has_room_passwd() const;
+  inline void clear_room_passwd();
+  static const int kRoomPasswdFieldNumber = 2;
+  inline const ::std::string& room_passwd() const;
+  inline void set_room_passwd(const ::std::string& value);
+  inline void set_room_passwd(const char* value);
+  inline void set_room_passwd(const char* value, size_t size);
+  inline ::std::string* mutable_room_passwd();
+  inline ::std::string* release_room_passwd();
+  inline void set_allocated_room_passwd(::std::string* room_passwd);
+
+  // @@protoc_insertion_point(class_scope:com.avxer.chat.EnterRoomRequest)
+ private:
+  inline void set_has_room_id();
+  inline void clear_has_room_id();
+  inline void set_has_room_passwd();
+  inline void clear_has_room_passwd();
+
+  ::std::string* room_passwd_;
+  ::google::protobuf::uint32 room_id_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[1];
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
 
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_ChatServerMessages_2eproto_impl();
@@ -522,42 +608,42 @@ class UserEnterNtfy : public ::google::protobuf::MessageLite {
   friend void protobuf_ShutdownFile_ChatServerMessages_2eproto();
 
   void InitAsDefaultInstance();
-  static UserEnterNtfy* default_instance_;
+  static EnterRoomRequest* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class UserLeaveNtfy : public ::google::protobuf::MessageLite {
+class EnterRoomResponse : public ::google::protobuf::MessageLite {
  public:
-  UserLeaveNtfy();
-  virtual ~UserLeaveNtfy();
+  EnterRoomResponse();
+  virtual ~EnterRoomResponse();
 
-  UserLeaveNtfy(const UserLeaveNtfy& from);
+  EnterRoomResponse(const EnterRoomResponse& from);
 
-  inline UserLeaveNtfy& operator=(const UserLeaveNtfy& from) {
+  inline EnterRoomResponse& operator=(const EnterRoomResponse& from) {
     CopyFrom(from);
     return *this;
   }
 
-  static const UserLeaveNtfy& default_instance();
+  static const EnterRoomResponse& default_instance();
 
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   // Returns the internal default instance pointer. This function can
   // return NULL thus should not be used by the user. This is intended
   // for Protobuf internal code. Please use default_instance() declared
   // above instead.
-  static inline const UserLeaveNtfy* internal_default_instance() {
+  static inline const EnterRoomResponse* internal_default_instance() {
     return default_instance_;
   }
   #endif
 
-  void Swap(UserLeaveNtfy* other);
+  void Swap(EnterRoomResponse* other);
 
   // implements Message ----------------------------------------------
 
-  UserLeaveNtfy* New() const;
+  EnterRoomResponse* New() const;
   void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
-  void CopyFrom(const UserLeaveNtfy& from);
-  void MergeFrom(const UserLeaveNtfy& from);
+  void CopyFrom(const EnterRoomResponse& from);
+  void MergeFrom(const EnterRoomResponse& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -579,12 +665,22 @@ class UserLeaveNtfy : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // @@protoc_insertion_point(class_scope:avxer.chat.UserLeaveNtfy)
- private:
+  // required int32 error_code = 1;
+  inline bool has_error_code() const;
+  inline void clear_error_code();
+  static const int kErrorCodeFieldNumber = 1;
+  inline ::google::protobuf::int32 error_code() const;
+  inline void set_error_code(::google::protobuf::int32 value);
 
+  // @@protoc_insertion_point(class_scope:com.avxer.chat.EnterRoomResponse)
+ private:
+  inline void set_has_error_code();
+  inline void clear_has_error_code();
+
+  ::google::protobuf::int32 error_code_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[1];
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
 
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_ChatServerMessages_2eproto_impl();
@@ -595,42 +691,42 @@ class UserLeaveNtfy : public ::google::protobuf::MessageLite {
   friend void protobuf_ShutdownFile_ChatServerMessages_2eproto();
 
   void InitAsDefaultInstance();
-  static UserLeaveNtfy* default_instance_;
+  static EnterRoomResponse* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class RoomChatMessage : public ::google::protobuf::MessageLite {
+class GroupChatRequest : public ::google::protobuf::MessageLite {
  public:
-  RoomChatMessage();
-  virtual ~RoomChatMessage();
+  GroupChatRequest();
+  virtual ~GroupChatRequest();
 
-  RoomChatMessage(const RoomChatMessage& from);
+  GroupChatRequest(const GroupChatRequest& from);
 
-  inline RoomChatMessage& operator=(const RoomChatMessage& from) {
+  inline GroupChatRequest& operator=(const GroupChatRequest& from) {
     CopyFrom(from);
     return *this;
   }
 
-  static const RoomChatMessage& default_instance();
+  static const GroupChatRequest& default_instance();
 
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   // Returns the internal default instance pointer. This function can
   // return NULL thus should not be used by the user. This is intended
   // for Protobuf internal code. Please use default_instance() declared
   // above instead.
-  static inline const RoomChatMessage* internal_default_instance() {
+  static inline const GroupChatRequest* internal_default_instance() {
     return default_instance_;
   }
   #endif
 
-  void Swap(RoomChatMessage* other);
+  void Swap(GroupChatRequest* other);
 
   // implements Message ----------------------------------------------
 
-  RoomChatMessage* New() const;
+  GroupChatRequest* New() const;
   void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
-  void CopyFrom(const RoomChatMessage& from);
-  void MergeFrom(const RoomChatMessage& from);
+  void CopyFrom(const GroupChatRequest& from);
+  void MergeFrom(const GroupChatRequest& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -652,12 +748,37 @@ class RoomChatMessage : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // @@protoc_insertion_point(class_scope:avxer.chat.RoomChatMessage)
- private:
+  // required uint32 room_id = 1;
+  inline bool has_room_id() const;
+  inline void clear_room_id();
+  static const int kRoomIdFieldNumber = 1;
+  inline ::google::protobuf::uint32 room_id() const;
+  inline void set_room_id(::google::protobuf::uint32 value);
 
+  // required bytes message_content = 2;
+  inline bool has_message_content() const;
+  inline void clear_message_content();
+  static const int kMessageContentFieldNumber = 2;
+  inline const ::std::string& message_content() const;
+  inline void set_message_content(const ::std::string& value);
+  inline void set_message_content(const char* value);
+  inline void set_message_content(const void* value, size_t size);
+  inline ::std::string* mutable_message_content();
+  inline ::std::string* release_message_content();
+  inline void set_allocated_message_content(::std::string* message_content);
+
+  // @@protoc_insertion_point(class_scope:com.avxer.chat.GroupChatRequest)
+ private:
+  inline void set_has_room_id();
+  inline void clear_has_room_id();
+  inline void set_has_message_content();
+  inline void clear_has_message_content();
+
+  ::std::string* message_content_;
+  ::google::protobuf::uint32 room_id_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[1];
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
 
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_ChatServerMessages_2eproto_impl();
@@ -668,42 +789,42 @@ class RoomChatMessage : public ::google::protobuf::MessageLite {
   friend void protobuf_ShutdownFile_ChatServerMessages_2eproto();
 
   void InitAsDefaultInstance();
-  static RoomChatMessage* default_instance_;
+  static GroupChatRequest* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class SystemChatMessage : public ::google::protobuf::MessageLite {
+class GroupChatNtfy : public ::google::protobuf::MessageLite {
  public:
-  SystemChatMessage();
-  virtual ~SystemChatMessage();
+  GroupChatNtfy();
+  virtual ~GroupChatNtfy();
 
-  SystemChatMessage(const SystemChatMessage& from);
+  GroupChatNtfy(const GroupChatNtfy& from);
 
-  inline SystemChatMessage& operator=(const SystemChatMessage& from) {
+  inline GroupChatNtfy& operator=(const GroupChatNtfy& from) {
     CopyFrom(from);
     return *this;
   }
 
-  static const SystemChatMessage& default_instance();
+  static const GroupChatNtfy& default_instance();
 
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   // Returns the internal default instance pointer. This function can
   // return NULL thus should not be used by the user. This is intended
   // for Protobuf internal code. Please use default_instance() declared
   // above instead.
-  static inline const SystemChatMessage* internal_default_instance() {
+  static inline const GroupChatNtfy* internal_default_instance() {
     return default_instance_;
   }
   #endif
 
-  void Swap(SystemChatMessage* other);
+  void Swap(GroupChatNtfy* other);
 
   // implements Message ----------------------------------------------
 
-  SystemChatMessage* New() const;
+  GroupChatNtfy* New() const;
   void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
-  void CopyFrom(const SystemChatMessage& from);
-  void MergeFrom(const SystemChatMessage& from);
+  void CopyFrom(const GroupChatNtfy& from);
+  void MergeFrom(const GroupChatNtfy& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -725,12 +846,52 @@ class SystemChatMessage : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // @@protoc_insertion_point(class_scope:avxer.chat.SystemChatMessage)
- private:
+  // required uint32 room_id = 1;
+  inline bool has_room_id() const;
+  inline void clear_room_id();
+  static const int kRoomIdFieldNumber = 1;
+  inline ::google::protobuf::uint32 room_id() const;
+  inline void set_room_id(::google::protobuf::uint32 value);
 
+  // required bytes message_content = 2;
+  inline bool has_message_content() const;
+  inline void clear_message_content();
+  static const int kMessageContentFieldNumber = 2;
+  inline const ::std::string& message_content() const;
+  inline void set_message_content(const ::std::string& value);
+  inline void set_message_content(const char* value);
+  inline void set_message_content(const void* value, size_t size);
+  inline ::std::string* mutable_message_content();
+  inline ::std::string* release_message_content();
+  inline void set_allocated_message_content(::std::string* message_content);
+
+  // required string sender_user_id = 3;
+  inline bool has_sender_user_id() const;
+  inline void clear_sender_user_id();
+  static const int kSenderUserIdFieldNumber = 3;
+  inline const ::std::string& sender_user_id() const;
+  inline void set_sender_user_id(const ::std::string& value);
+  inline void set_sender_user_id(const char* value);
+  inline void set_sender_user_id(const char* value, size_t size);
+  inline ::std::string* mutable_sender_user_id();
+  inline ::std::string* release_sender_user_id();
+  inline void set_allocated_sender_user_id(::std::string* sender_user_id);
+
+  // @@protoc_insertion_point(class_scope:com.avxer.chat.GroupChatNtfy)
+ private:
+  inline void set_has_room_id();
+  inline void clear_has_room_id();
+  inline void set_has_message_content();
+  inline void clear_has_message_content();
+  inline void set_has_sender_user_id();
+  inline void clear_has_sender_user_id();
+
+  ::std::string* message_content_;
+  ::std::string* sender_user_id_;
+  ::google::protobuf::uint32 room_id_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[1];
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
 
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_ChatServerMessages_2eproto_impl();
@@ -741,42 +902,42 @@ class SystemChatMessage : public ::google::protobuf::MessageLite {
   friend void protobuf_ShutdownFile_ChatServerMessages_2eproto();
 
   void InitAsDefaultInstance();
-  static SystemChatMessage* default_instance_;
+  static GroupChatNtfy* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class PrivateChatMessage : public ::google::protobuf::MessageLite {
+class UserEnteredNtfy : public ::google::protobuf::MessageLite {
  public:
-  PrivateChatMessage();
-  virtual ~PrivateChatMessage();
+  UserEnteredNtfy();
+  virtual ~UserEnteredNtfy();
 
-  PrivateChatMessage(const PrivateChatMessage& from);
+  UserEnteredNtfy(const UserEnteredNtfy& from);
 
-  inline PrivateChatMessage& operator=(const PrivateChatMessage& from) {
+  inline UserEnteredNtfy& operator=(const UserEnteredNtfy& from) {
     CopyFrom(from);
     return *this;
   }
 
-  static const PrivateChatMessage& default_instance();
+  static const UserEnteredNtfy& default_instance();
 
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   // Returns the internal default instance pointer. This function can
   // return NULL thus should not be used by the user. This is intended
   // for Protobuf internal code. Please use default_instance() declared
   // above instead.
-  static inline const PrivateChatMessage* internal_default_instance() {
+  static inline const UserEnteredNtfy* internal_default_instance() {
     return default_instance_;
   }
   #endif
 
-  void Swap(PrivateChatMessage* other);
+  void Swap(UserEnteredNtfy* other);
 
   // implements Message ----------------------------------------------
 
-  PrivateChatMessage* New() const;
+  UserEnteredNtfy* New() const;
   void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
-  void CopyFrom(const PrivateChatMessage& from);
-  void MergeFrom(const PrivateChatMessage& from);
+  void CopyFrom(const UserEnteredNtfy& from);
+  void MergeFrom(const UserEnteredNtfy& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -798,12 +959,42 @@ class PrivateChatMessage : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // @@protoc_insertion_point(class_scope:avxer.chat.PrivateChatMessage)
- private:
+  // required string user_id = 1;
+  inline bool has_user_id() const;
+  inline void clear_user_id();
+  static const int kUserIdFieldNumber = 1;
+  inline const ::std::string& user_id() const;
+  inline void set_user_id(const ::std::string& value);
+  inline void set_user_id(const char* value);
+  inline void set_user_id(const char* value, size_t size);
+  inline ::std::string* mutable_user_id();
+  inline ::std::string* release_user_id();
+  inline void set_allocated_user_id(::std::string* user_id);
 
+  // required string nick_name = 2;
+  inline bool has_nick_name() const;
+  inline void clear_nick_name();
+  static const int kNickNameFieldNumber = 2;
+  inline const ::std::string& nick_name() const;
+  inline void set_nick_name(const ::std::string& value);
+  inline void set_nick_name(const char* value);
+  inline void set_nick_name(const char* value, size_t size);
+  inline ::std::string* mutable_nick_name();
+  inline ::std::string* release_nick_name();
+  inline void set_allocated_nick_name(::std::string* nick_name);
+
+  // @@protoc_insertion_point(class_scope:com.avxer.chat.UserEnteredNtfy)
+ private:
+  inline void set_has_user_id();
+  inline void clear_has_user_id();
+  inline void set_has_nick_name();
+  inline void clear_has_nick_name();
+
+  ::std::string* user_id_;
+  ::std::string* nick_name_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[1];
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
 
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_ChatServerMessages_2eproto_impl();
@@ -814,42 +1005,42 @@ class PrivateChatMessage : public ::google::protobuf::MessageLite {
   friend void protobuf_ShutdownFile_ChatServerMessages_2eproto();
 
   void InitAsDefaultInstance();
-  static PrivateChatMessage* default_instance_;
+  static UserEnteredNtfy* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class KeepAliveNtfy : public ::google::protobuf::MessageLite {
+class LeaveRoomRequest : public ::google::protobuf::MessageLite {
  public:
-  KeepAliveNtfy();
-  virtual ~KeepAliveNtfy();
+  LeaveRoomRequest();
+  virtual ~LeaveRoomRequest();
 
-  KeepAliveNtfy(const KeepAliveNtfy& from);
+  LeaveRoomRequest(const LeaveRoomRequest& from);
 
-  inline KeepAliveNtfy& operator=(const KeepAliveNtfy& from) {
+  inline LeaveRoomRequest& operator=(const LeaveRoomRequest& from) {
     CopyFrom(from);
     return *this;
   }
 
-  static const KeepAliveNtfy& default_instance();
+  static const LeaveRoomRequest& default_instance();
 
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   // Returns the internal default instance pointer. This function can
   // return NULL thus should not be used by the user. This is intended
   // for Protobuf internal code. Please use default_instance() declared
   // above instead.
-  static inline const KeepAliveNtfy* internal_default_instance() {
+  static inline const LeaveRoomRequest* internal_default_instance() {
     return default_instance_;
   }
   #endif
 
-  void Swap(KeepAliveNtfy* other);
+  void Swap(LeaveRoomRequest* other);
 
   // implements Message ----------------------------------------------
 
-  KeepAliveNtfy* New() const;
+  LeaveRoomRequest* New() const;
   void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
-  void CopyFrom(const KeepAliveNtfy& from);
-  void MergeFrom(const KeepAliveNtfy& from);
+  void CopyFrom(const LeaveRoomRequest& from);
+  void MergeFrom(const LeaveRoomRequest& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -871,12 +1062,22 @@ class KeepAliveNtfy : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // @@protoc_insertion_point(class_scope:avxer.chat.KeepAliveNtfy)
- private:
+  // required uint32 room_id = 1;
+  inline bool has_room_id() const;
+  inline void clear_room_id();
+  static const int kRoomIdFieldNumber = 1;
+  inline ::google::protobuf::uint32 room_id() const;
+  inline void set_room_id(::google::protobuf::uint32 value);
 
+  // @@protoc_insertion_point(class_scope:com.avxer.chat.LeaveRoomRequest)
+ private:
+  inline void set_has_room_id();
+  inline void clear_has_room_id();
+
+  ::google::protobuf::uint32 room_id_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[1];
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
 
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_ChatServerMessages_2eproto_impl();
@@ -887,42 +1088,42 @@ class KeepAliveNtfy : public ::google::protobuf::MessageLite {
   friend void protobuf_ShutdownFile_ChatServerMessages_2eproto();
 
   void InitAsDefaultInstance();
-  static KeepAliveNtfy* default_instance_;
+  static LeaveRoomRequest* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class PingRequest : public ::google::protobuf::MessageLite {
+class UserLeavedNtfy : public ::google::protobuf::MessageLite {
  public:
-  PingRequest();
-  virtual ~PingRequest();
+  UserLeavedNtfy();
+  virtual ~UserLeavedNtfy();
 
-  PingRequest(const PingRequest& from);
+  UserLeavedNtfy(const UserLeavedNtfy& from);
 
-  inline PingRequest& operator=(const PingRequest& from) {
+  inline UserLeavedNtfy& operator=(const UserLeavedNtfy& from) {
     CopyFrom(from);
     return *this;
   }
 
-  static const PingRequest& default_instance();
+  static const UserLeavedNtfy& default_instance();
 
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   // Returns the internal default instance pointer. This function can
   // return NULL thus should not be used by the user. This is intended
   // for Protobuf internal code. Please use default_instance() declared
   // above instead.
-  static inline const PingRequest* internal_default_instance() {
+  static inline const UserLeavedNtfy* internal_default_instance() {
     return default_instance_;
   }
   #endif
 
-  void Swap(PingRequest* other);
+  void Swap(UserLeavedNtfy* other);
 
   // implements Message ----------------------------------------------
 
-  PingRequest* New() const;
+  UserLeavedNtfy* New() const;
   void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
-  void CopyFrom(const PingRequest& from);
-  void MergeFrom(const PingRequest& from);
+  void CopyFrom(const UserLeavedNtfy& from);
+  void MergeFrom(const UserLeavedNtfy& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -944,12 +1145,27 @@ class PingRequest : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // @@protoc_insertion_point(class_scope:avxer.chat.PingRequest)
- private:
+  // required string user_id = 1;
+  inline bool has_user_id() const;
+  inline void clear_user_id();
+  static const int kUserIdFieldNumber = 1;
+  inline const ::std::string& user_id() const;
+  inline void set_user_id(const ::std::string& value);
+  inline void set_user_id(const char* value);
+  inline void set_user_id(const char* value, size_t size);
+  inline ::std::string* mutable_user_id();
+  inline ::std::string* release_user_id();
+  inline void set_allocated_user_id(::std::string* user_id);
 
+  // @@protoc_insertion_point(class_scope:com.avxer.chat.UserLeavedNtfy)
+ private:
+  inline void set_has_user_id();
+  inline void clear_has_user_id();
+
+  ::std::string* user_id_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[1];
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
 
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_ChatServerMessages_2eproto_impl();
@@ -960,7 +1176,7 @@ class PingRequest : public ::google::protobuf::MessageLite {
   friend void protobuf_ShutdownFile_ChatServerMessages_2eproto();
 
   void InitAsDefaultInstance();
-  static PingRequest* default_instance_;
+  static UserLeavedNtfy* default_instance_;
 };
 // ===================================================================
 
@@ -1141,45 +1357,852 @@ inline void UserLoginResponse::set_error_code(::google::protobuf::int32 value) {
 
 // -------------------------------------------------------------------
 
-// AdminLoginRequest
+// CreatRoomRequest
+
+// required uint32 max_user_count = 1;
+inline bool CreatRoomRequest::has_max_user_count() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void CreatRoomRequest::set_has_max_user_count() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void CreatRoomRequest::clear_has_max_user_count() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void CreatRoomRequest::clear_max_user_count() {
+  max_user_count_ = 0u;
+  clear_has_max_user_count();
+}
+inline ::google::protobuf::uint32 CreatRoomRequest::max_user_count() const {
+  return max_user_count_;
+}
+inline void CreatRoomRequest::set_max_user_count(::google::protobuf::uint32 value) {
+  set_has_max_user_count();
+  max_user_count_ = value;
+}
+
+// optional string room_name = 2;
+inline bool CreatRoomRequest::has_room_name() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void CreatRoomRequest::set_has_room_name() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void CreatRoomRequest::clear_has_room_name() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void CreatRoomRequest::clear_room_name() {
+  if (room_name_ != &::google::protobuf::internal::kEmptyString) {
+    room_name_->clear();
+  }
+  clear_has_room_name();
+}
+inline const ::std::string& CreatRoomRequest::room_name() const {
+  return *room_name_;
+}
+inline void CreatRoomRequest::set_room_name(const ::std::string& value) {
+  set_has_room_name();
+  if (room_name_ == &::google::protobuf::internal::kEmptyString) {
+    room_name_ = new ::std::string;
+  }
+  room_name_->assign(value);
+}
+inline void CreatRoomRequest::set_room_name(const char* value) {
+  set_has_room_name();
+  if (room_name_ == &::google::protobuf::internal::kEmptyString) {
+    room_name_ = new ::std::string;
+  }
+  room_name_->assign(value);
+}
+inline void CreatRoomRequest::set_room_name(const char* value, size_t size) {
+  set_has_room_name();
+  if (room_name_ == &::google::protobuf::internal::kEmptyString) {
+    room_name_ = new ::std::string;
+  }
+  room_name_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* CreatRoomRequest::mutable_room_name() {
+  set_has_room_name();
+  if (room_name_ == &::google::protobuf::internal::kEmptyString) {
+    room_name_ = new ::std::string;
+  }
+  return room_name_;
+}
+inline ::std::string* CreatRoomRequest::release_room_name() {
+  clear_has_room_name();
+  if (room_name_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = room_name_;
+    room_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void CreatRoomRequest::set_allocated_room_name(::std::string* room_name) {
+  if (room_name_ != &::google::protobuf::internal::kEmptyString) {
+    delete room_name_;
+  }
+  if (room_name) {
+    set_has_room_name();
+    room_name_ = room_name;
+  } else {
+    clear_has_room_name();
+    room_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// optional string room_passwd = 3;
+inline bool CreatRoomRequest::has_room_passwd() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void CreatRoomRequest::set_has_room_passwd() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void CreatRoomRequest::clear_has_room_passwd() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void CreatRoomRequest::clear_room_passwd() {
+  if (room_passwd_ != &::google::protobuf::internal::kEmptyString) {
+    room_passwd_->clear();
+  }
+  clear_has_room_passwd();
+}
+inline const ::std::string& CreatRoomRequest::room_passwd() const {
+  return *room_passwd_;
+}
+inline void CreatRoomRequest::set_room_passwd(const ::std::string& value) {
+  set_has_room_passwd();
+  if (room_passwd_ == &::google::protobuf::internal::kEmptyString) {
+    room_passwd_ = new ::std::string;
+  }
+  room_passwd_->assign(value);
+}
+inline void CreatRoomRequest::set_room_passwd(const char* value) {
+  set_has_room_passwd();
+  if (room_passwd_ == &::google::protobuf::internal::kEmptyString) {
+    room_passwd_ = new ::std::string;
+  }
+  room_passwd_->assign(value);
+}
+inline void CreatRoomRequest::set_room_passwd(const char* value, size_t size) {
+  set_has_room_passwd();
+  if (room_passwd_ == &::google::protobuf::internal::kEmptyString) {
+    room_passwd_ = new ::std::string;
+  }
+  room_passwd_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* CreatRoomRequest::mutable_room_passwd() {
+  set_has_room_passwd();
+  if (room_passwd_ == &::google::protobuf::internal::kEmptyString) {
+    room_passwd_ = new ::std::string;
+  }
+  return room_passwd_;
+}
+inline ::std::string* CreatRoomRequest::release_room_passwd() {
+  clear_has_room_passwd();
+  if (room_passwd_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = room_passwd_;
+    room_passwd_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void CreatRoomRequest::set_allocated_room_passwd(::std::string* room_passwd) {
+  if (room_passwd_ != &::google::protobuf::internal::kEmptyString) {
+    delete room_passwd_;
+  }
+  if (room_passwd) {
+    set_has_room_passwd();
+    room_passwd_ = room_passwd;
+  } else {
+    clear_has_room_passwd();
+    room_passwd_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
 
 // -------------------------------------------------------------------
 
-// AdminLogoutRequest
+// CreatRoomResponse
+
+// required int32 error_code = 1;
+inline bool CreatRoomResponse::has_error_code() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void CreatRoomResponse::set_has_error_code() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void CreatRoomResponse::clear_has_error_code() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void CreatRoomResponse::clear_error_code() {
+  error_code_ = 0;
+  clear_has_error_code();
+}
+inline ::google::protobuf::int32 CreatRoomResponse::error_code() const {
+  return error_code_;
+}
+inline void CreatRoomResponse::set_error_code(::google::protobuf::int32 value) {
+  set_has_error_code();
+  error_code_ = value;
+}
+
+// optional uint32 room_id = 2;
+inline bool CreatRoomResponse::has_room_id() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void CreatRoomResponse::set_has_room_id() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void CreatRoomResponse::clear_has_room_id() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void CreatRoomResponse::clear_room_id() {
+  room_id_ = 0u;
+  clear_has_room_id();
+}
+inline ::google::protobuf::uint32 CreatRoomResponse::room_id() const {
+  return room_id_;
+}
+inline void CreatRoomResponse::set_room_id(::google::protobuf::uint32 value) {
+  set_has_room_id();
+  room_id_ = value;
+}
 
 // -------------------------------------------------------------------
 
-// UserEnterNtfy
+// EnterRoomRequest
+
+// required uint32 room_id = 1;
+inline bool EnterRoomRequest::has_room_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void EnterRoomRequest::set_has_room_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void EnterRoomRequest::clear_has_room_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void EnterRoomRequest::clear_room_id() {
+  room_id_ = 0u;
+  clear_has_room_id();
+}
+inline ::google::protobuf::uint32 EnterRoomRequest::room_id() const {
+  return room_id_;
+}
+inline void EnterRoomRequest::set_room_id(::google::protobuf::uint32 value) {
+  set_has_room_id();
+  room_id_ = value;
+}
+
+// optional string room_passwd = 2;
+inline bool EnterRoomRequest::has_room_passwd() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void EnterRoomRequest::set_has_room_passwd() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void EnterRoomRequest::clear_has_room_passwd() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void EnterRoomRequest::clear_room_passwd() {
+  if (room_passwd_ != &::google::protobuf::internal::kEmptyString) {
+    room_passwd_->clear();
+  }
+  clear_has_room_passwd();
+}
+inline const ::std::string& EnterRoomRequest::room_passwd() const {
+  return *room_passwd_;
+}
+inline void EnterRoomRequest::set_room_passwd(const ::std::string& value) {
+  set_has_room_passwd();
+  if (room_passwd_ == &::google::protobuf::internal::kEmptyString) {
+    room_passwd_ = new ::std::string;
+  }
+  room_passwd_->assign(value);
+}
+inline void EnterRoomRequest::set_room_passwd(const char* value) {
+  set_has_room_passwd();
+  if (room_passwd_ == &::google::protobuf::internal::kEmptyString) {
+    room_passwd_ = new ::std::string;
+  }
+  room_passwd_->assign(value);
+}
+inline void EnterRoomRequest::set_room_passwd(const char* value, size_t size) {
+  set_has_room_passwd();
+  if (room_passwd_ == &::google::protobuf::internal::kEmptyString) {
+    room_passwd_ = new ::std::string;
+  }
+  room_passwd_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* EnterRoomRequest::mutable_room_passwd() {
+  set_has_room_passwd();
+  if (room_passwd_ == &::google::protobuf::internal::kEmptyString) {
+    room_passwd_ = new ::std::string;
+  }
+  return room_passwd_;
+}
+inline ::std::string* EnterRoomRequest::release_room_passwd() {
+  clear_has_room_passwd();
+  if (room_passwd_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = room_passwd_;
+    room_passwd_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void EnterRoomRequest::set_allocated_room_passwd(::std::string* room_passwd) {
+  if (room_passwd_ != &::google::protobuf::internal::kEmptyString) {
+    delete room_passwd_;
+  }
+  if (room_passwd) {
+    set_has_room_passwd();
+    room_passwd_ = room_passwd;
+  } else {
+    clear_has_room_passwd();
+    room_passwd_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
 
 // -------------------------------------------------------------------
 
-// UserLeaveNtfy
+// EnterRoomResponse
+
+// required int32 error_code = 1;
+inline bool EnterRoomResponse::has_error_code() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void EnterRoomResponse::set_has_error_code() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void EnterRoomResponse::clear_has_error_code() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void EnterRoomResponse::clear_error_code() {
+  error_code_ = 0;
+  clear_has_error_code();
+}
+inline ::google::protobuf::int32 EnterRoomResponse::error_code() const {
+  return error_code_;
+}
+inline void EnterRoomResponse::set_error_code(::google::protobuf::int32 value) {
+  set_has_error_code();
+  error_code_ = value;
+}
 
 // -------------------------------------------------------------------
 
-// RoomChatMessage
+// GroupChatRequest
+
+// required uint32 room_id = 1;
+inline bool GroupChatRequest::has_room_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void GroupChatRequest::set_has_room_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void GroupChatRequest::clear_has_room_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void GroupChatRequest::clear_room_id() {
+  room_id_ = 0u;
+  clear_has_room_id();
+}
+inline ::google::protobuf::uint32 GroupChatRequest::room_id() const {
+  return room_id_;
+}
+inline void GroupChatRequest::set_room_id(::google::protobuf::uint32 value) {
+  set_has_room_id();
+  room_id_ = value;
+}
+
+// required bytes message_content = 2;
+inline bool GroupChatRequest::has_message_content() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void GroupChatRequest::set_has_message_content() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void GroupChatRequest::clear_has_message_content() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void GroupChatRequest::clear_message_content() {
+  if (message_content_ != &::google::protobuf::internal::kEmptyString) {
+    message_content_->clear();
+  }
+  clear_has_message_content();
+}
+inline const ::std::string& GroupChatRequest::message_content() const {
+  return *message_content_;
+}
+inline void GroupChatRequest::set_message_content(const ::std::string& value) {
+  set_has_message_content();
+  if (message_content_ == &::google::protobuf::internal::kEmptyString) {
+    message_content_ = new ::std::string;
+  }
+  message_content_->assign(value);
+}
+inline void GroupChatRequest::set_message_content(const char* value) {
+  set_has_message_content();
+  if (message_content_ == &::google::protobuf::internal::kEmptyString) {
+    message_content_ = new ::std::string;
+  }
+  message_content_->assign(value);
+}
+inline void GroupChatRequest::set_message_content(const void* value, size_t size) {
+  set_has_message_content();
+  if (message_content_ == &::google::protobuf::internal::kEmptyString) {
+    message_content_ = new ::std::string;
+  }
+  message_content_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* GroupChatRequest::mutable_message_content() {
+  set_has_message_content();
+  if (message_content_ == &::google::protobuf::internal::kEmptyString) {
+    message_content_ = new ::std::string;
+  }
+  return message_content_;
+}
+inline ::std::string* GroupChatRequest::release_message_content() {
+  clear_has_message_content();
+  if (message_content_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = message_content_;
+    message_content_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void GroupChatRequest::set_allocated_message_content(::std::string* message_content) {
+  if (message_content_ != &::google::protobuf::internal::kEmptyString) {
+    delete message_content_;
+  }
+  if (message_content) {
+    set_has_message_content();
+    message_content_ = message_content;
+  } else {
+    clear_has_message_content();
+    message_content_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
 
 // -------------------------------------------------------------------
 
-// SystemChatMessage
+// GroupChatNtfy
+
+// required uint32 room_id = 1;
+inline bool GroupChatNtfy::has_room_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void GroupChatNtfy::set_has_room_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void GroupChatNtfy::clear_has_room_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void GroupChatNtfy::clear_room_id() {
+  room_id_ = 0u;
+  clear_has_room_id();
+}
+inline ::google::protobuf::uint32 GroupChatNtfy::room_id() const {
+  return room_id_;
+}
+inline void GroupChatNtfy::set_room_id(::google::protobuf::uint32 value) {
+  set_has_room_id();
+  room_id_ = value;
+}
+
+// required bytes message_content = 2;
+inline bool GroupChatNtfy::has_message_content() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void GroupChatNtfy::set_has_message_content() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void GroupChatNtfy::clear_has_message_content() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void GroupChatNtfy::clear_message_content() {
+  if (message_content_ != &::google::protobuf::internal::kEmptyString) {
+    message_content_->clear();
+  }
+  clear_has_message_content();
+}
+inline const ::std::string& GroupChatNtfy::message_content() const {
+  return *message_content_;
+}
+inline void GroupChatNtfy::set_message_content(const ::std::string& value) {
+  set_has_message_content();
+  if (message_content_ == &::google::protobuf::internal::kEmptyString) {
+    message_content_ = new ::std::string;
+  }
+  message_content_->assign(value);
+}
+inline void GroupChatNtfy::set_message_content(const char* value) {
+  set_has_message_content();
+  if (message_content_ == &::google::protobuf::internal::kEmptyString) {
+    message_content_ = new ::std::string;
+  }
+  message_content_->assign(value);
+}
+inline void GroupChatNtfy::set_message_content(const void* value, size_t size) {
+  set_has_message_content();
+  if (message_content_ == &::google::protobuf::internal::kEmptyString) {
+    message_content_ = new ::std::string;
+  }
+  message_content_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* GroupChatNtfy::mutable_message_content() {
+  set_has_message_content();
+  if (message_content_ == &::google::protobuf::internal::kEmptyString) {
+    message_content_ = new ::std::string;
+  }
+  return message_content_;
+}
+inline ::std::string* GroupChatNtfy::release_message_content() {
+  clear_has_message_content();
+  if (message_content_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = message_content_;
+    message_content_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void GroupChatNtfy::set_allocated_message_content(::std::string* message_content) {
+  if (message_content_ != &::google::protobuf::internal::kEmptyString) {
+    delete message_content_;
+  }
+  if (message_content) {
+    set_has_message_content();
+    message_content_ = message_content;
+  } else {
+    clear_has_message_content();
+    message_content_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required string sender_user_id = 3;
+inline bool GroupChatNtfy::has_sender_user_id() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void GroupChatNtfy::set_has_sender_user_id() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void GroupChatNtfy::clear_has_sender_user_id() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void GroupChatNtfy::clear_sender_user_id() {
+  if (sender_user_id_ != &::google::protobuf::internal::kEmptyString) {
+    sender_user_id_->clear();
+  }
+  clear_has_sender_user_id();
+}
+inline const ::std::string& GroupChatNtfy::sender_user_id() const {
+  return *sender_user_id_;
+}
+inline void GroupChatNtfy::set_sender_user_id(const ::std::string& value) {
+  set_has_sender_user_id();
+  if (sender_user_id_ == &::google::protobuf::internal::kEmptyString) {
+    sender_user_id_ = new ::std::string;
+  }
+  sender_user_id_->assign(value);
+}
+inline void GroupChatNtfy::set_sender_user_id(const char* value) {
+  set_has_sender_user_id();
+  if (sender_user_id_ == &::google::protobuf::internal::kEmptyString) {
+    sender_user_id_ = new ::std::string;
+  }
+  sender_user_id_->assign(value);
+}
+inline void GroupChatNtfy::set_sender_user_id(const char* value, size_t size) {
+  set_has_sender_user_id();
+  if (sender_user_id_ == &::google::protobuf::internal::kEmptyString) {
+    sender_user_id_ = new ::std::string;
+  }
+  sender_user_id_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* GroupChatNtfy::mutable_sender_user_id() {
+  set_has_sender_user_id();
+  if (sender_user_id_ == &::google::protobuf::internal::kEmptyString) {
+    sender_user_id_ = new ::std::string;
+  }
+  return sender_user_id_;
+}
+inline ::std::string* GroupChatNtfy::release_sender_user_id() {
+  clear_has_sender_user_id();
+  if (sender_user_id_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = sender_user_id_;
+    sender_user_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void GroupChatNtfy::set_allocated_sender_user_id(::std::string* sender_user_id) {
+  if (sender_user_id_ != &::google::protobuf::internal::kEmptyString) {
+    delete sender_user_id_;
+  }
+  if (sender_user_id) {
+    set_has_sender_user_id();
+    sender_user_id_ = sender_user_id;
+  } else {
+    clear_has_sender_user_id();
+    sender_user_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
 
 // -------------------------------------------------------------------
 
-// PrivateChatMessage
+// UserEnteredNtfy
+
+// required string user_id = 1;
+inline bool UserEnteredNtfy::has_user_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void UserEnteredNtfy::set_has_user_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void UserEnteredNtfy::clear_has_user_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void UserEnteredNtfy::clear_user_id() {
+  if (user_id_ != &::google::protobuf::internal::kEmptyString) {
+    user_id_->clear();
+  }
+  clear_has_user_id();
+}
+inline const ::std::string& UserEnteredNtfy::user_id() const {
+  return *user_id_;
+}
+inline void UserEnteredNtfy::set_user_id(const ::std::string& value) {
+  set_has_user_id();
+  if (user_id_ == &::google::protobuf::internal::kEmptyString) {
+    user_id_ = new ::std::string;
+  }
+  user_id_->assign(value);
+}
+inline void UserEnteredNtfy::set_user_id(const char* value) {
+  set_has_user_id();
+  if (user_id_ == &::google::protobuf::internal::kEmptyString) {
+    user_id_ = new ::std::string;
+  }
+  user_id_->assign(value);
+}
+inline void UserEnteredNtfy::set_user_id(const char* value, size_t size) {
+  set_has_user_id();
+  if (user_id_ == &::google::protobuf::internal::kEmptyString) {
+    user_id_ = new ::std::string;
+  }
+  user_id_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* UserEnteredNtfy::mutable_user_id() {
+  set_has_user_id();
+  if (user_id_ == &::google::protobuf::internal::kEmptyString) {
+    user_id_ = new ::std::string;
+  }
+  return user_id_;
+}
+inline ::std::string* UserEnteredNtfy::release_user_id() {
+  clear_has_user_id();
+  if (user_id_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = user_id_;
+    user_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void UserEnteredNtfy::set_allocated_user_id(::std::string* user_id) {
+  if (user_id_ != &::google::protobuf::internal::kEmptyString) {
+    delete user_id_;
+  }
+  if (user_id) {
+    set_has_user_id();
+    user_id_ = user_id;
+  } else {
+    clear_has_user_id();
+    user_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required string nick_name = 2;
+inline bool UserEnteredNtfy::has_nick_name() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void UserEnteredNtfy::set_has_nick_name() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void UserEnteredNtfy::clear_has_nick_name() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void UserEnteredNtfy::clear_nick_name() {
+  if (nick_name_ != &::google::protobuf::internal::kEmptyString) {
+    nick_name_->clear();
+  }
+  clear_has_nick_name();
+}
+inline const ::std::string& UserEnteredNtfy::nick_name() const {
+  return *nick_name_;
+}
+inline void UserEnteredNtfy::set_nick_name(const ::std::string& value) {
+  set_has_nick_name();
+  if (nick_name_ == &::google::protobuf::internal::kEmptyString) {
+    nick_name_ = new ::std::string;
+  }
+  nick_name_->assign(value);
+}
+inline void UserEnteredNtfy::set_nick_name(const char* value) {
+  set_has_nick_name();
+  if (nick_name_ == &::google::protobuf::internal::kEmptyString) {
+    nick_name_ = new ::std::string;
+  }
+  nick_name_->assign(value);
+}
+inline void UserEnteredNtfy::set_nick_name(const char* value, size_t size) {
+  set_has_nick_name();
+  if (nick_name_ == &::google::protobuf::internal::kEmptyString) {
+    nick_name_ = new ::std::string;
+  }
+  nick_name_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* UserEnteredNtfy::mutable_nick_name() {
+  set_has_nick_name();
+  if (nick_name_ == &::google::protobuf::internal::kEmptyString) {
+    nick_name_ = new ::std::string;
+  }
+  return nick_name_;
+}
+inline ::std::string* UserEnteredNtfy::release_nick_name() {
+  clear_has_nick_name();
+  if (nick_name_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = nick_name_;
+    nick_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void UserEnteredNtfy::set_allocated_nick_name(::std::string* nick_name) {
+  if (nick_name_ != &::google::protobuf::internal::kEmptyString) {
+    delete nick_name_;
+  }
+  if (nick_name) {
+    set_has_nick_name();
+    nick_name_ = nick_name;
+  } else {
+    clear_has_nick_name();
+    nick_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
 
 // -------------------------------------------------------------------
 
-// KeepAliveNtfy
+// LeaveRoomRequest
+
+// required uint32 room_id = 1;
+inline bool LeaveRoomRequest::has_room_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void LeaveRoomRequest::set_has_room_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void LeaveRoomRequest::clear_has_room_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void LeaveRoomRequest::clear_room_id() {
+  room_id_ = 0u;
+  clear_has_room_id();
+}
+inline ::google::protobuf::uint32 LeaveRoomRequest::room_id() const {
+  return room_id_;
+}
+inline void LeaveRoomRequest::set_room_id(::google::protobuf::uint32 value) {
+  set_has_room_id();
+  room_id_ = value;
+}
 
 // -------------------------------------------------------------------
 
-// PingRequest
+// UserLeavedNtfy
+
+// required string user_id = 1;
+inline bool UserLeavedNtfy::has_user_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void UserLeavedNtfy::set_has_user_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void UserLeavedNtfy::clear_has_user_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void UserLeavedNtfy::clear_user_id() {
+  if (user_id_ != &::google::protobuf::internal::kEmptyString) {
+    user_id_->clear();
+  }
+  clear_has_user_id();
+}
+inline const ::std::string& UserLeavedNtfy::user_id() const {
+  return *user_id_;
+}
+inline void UserLeavedNtfy::set_user_id(const ::std::string& value) {
+  set_has_user_id();
+  if (user_id_ == &::google::protobuf::internal::kEmptyString) {
+    user_id_ = new ::std::string;
+  }
+  user_id_->assign(value);
+}
+inline void UserLeavedNtfy::set_user_id(const char* value) {
+  set_has_user_id();
+  if (user_id_ == &::google::protobuf::internal::kEmptyString) {
+    user_id_ = new ::std::string;
+  }
+  user_id_->assign(value);
+}
+inline void UserLeavedNtfy::set_user_id(const char* value, size_t size) {
+  set_has_user_id();
+  if (user_id_ == &::google::protobuf::internal::kEmptyString) {
+    user_id_ = new ::std::string;
+  }
+  user_id_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* UserLeavedNtfy::mutable_user_id() {
+  set_has_user_id();
+  if (user_id_ == &::google::protobuf::internal::kEmptyString) {
+    user_id_ = new ::std::string;
+  }
+  return user_id_;
+}
+inline ::std::string* UserLeavedNtfy::release_user_id() {
+  clear_has_user_id();
+  if (user_id_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = user_id_;
+    user_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void UserLeavedNtfy::set_allocated_user_id(::std::string* user_id) {
+  if (user_id_ != &::google::protobuf::internal::kEmptyString) {
+    delete user_id_;
+  }
+  if (user_id) {
+    set_has_user_id();
+    user_id_ = user_id;
+  } else {
+    clear_has_user_id();
+    user_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
 
 
 // @@protoc_insertion_point(namespace_scope)
 
 }  // namespace chat
 }  // namespace avxer
+}  // namespace com
 
 // @@protoc_insertion_point(global_scope)
 

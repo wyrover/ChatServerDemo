@@ -1,8 +1,10 @@
 #ifndef CHAT_SERVER_WAPISINVOKERESULT_H
 #define CHAT_SERVER_WAPISINVOKERESULT_H
 
-#include <memory>
 #include <json/json.h>
+#include <memory>
+#include <string>
+#include "ChatServerErrorCode.h"
 
 class WapisInvokeResult {
 public:
@@ -26,6 +28,18 @@ protected:
 
 
 class LoginResult : public WapisInvokeResult {
+public:
+  bool DoParse(Json::Value& root) override {
+    if (error_code_ == ESUCCEED) {
+      user_id_ = root["user_id"].asString();
+    }
+    return true;
+  }
+
+  std::string user_id() const { return user_id_; }
+
+private:
+  std::string user_id_;
 };
 
 typedef std::shared_ptr<LoginResult> LoginResultPtr;

@@ -1,0 +1,10 @@
+/vsprojects/*.sdf
+/vsprojects/ChatServer/Release
+/vsprojects/ChatServer/Debug
+/vsprojects/ChatServer/logs
+/vsprojects/ChatClient/Release
+/vsprojects/ChatClient/Debug
+*.pdb
+*.ilk
+*.log
+*.log

@@ -41,7 +41,7 @@ public:
   TaskPool& operator=(const TaskPool&) = delete;
 
 private:
-  std::atomic_bool stop_execute_;
+  volatile std::atomic_bool stop_execute_;
   avxer::BlockingQueue<task_t> tasks_;
   std::thread task_thread_;
 };

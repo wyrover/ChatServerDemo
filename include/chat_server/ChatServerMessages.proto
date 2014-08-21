@@ -1,6 +1,6 @@
 option optimize_for = LITE_RUNTIME;
 
-package avxer.chat;
+package com.avxer.chat;
 
 message UserLoginRequest {
   required string login_name = 1;
@@ -13,20 +13,46 @@ message UserLoginResponse {
 
 message UserLogoutRequest {}
 
-message AdminLoginRequest {}
+message CreatRoomRequest {
+  required uint32 max_user_count = 1;
+  optional string room_name = 2;
+  optional string room_passwd = 3;
+}
 
-message AdminLogoutRequest {}
+message CreatRoomResponse {
+  required int32 error_code = 1;
+  optional uint32 room_id = 2;
+}
 
-message UserEnterNtfy {}
+message EnterRoomRequest {
+  required uint32 room_id = 1;
+  optional string room_passwd = 2;
+}
 
-message UserLeaveNtfy {}
+message EnterRoomResponse {
+  required int32 error_code = 1;
+}
 
-message RoomChatMessage {}
+message GroupChatRequest {
+  required uint32 room_id = 1;
+  required bytes message_content = 2;
+}
 
-message SystemChatMessage {}
+message GroupChatNtfy {
+  required uint32 room_id = 1;
+  required bytes message_content = 2;
+  required string sender_user_id = 3;
+}
 
-message PrivateChatMessage {}
+message UserEnteredNtfy {
+  required string user_id = 1;
+  required string nick_name = 2;
+}
 
-message KeepAliveNtfy {}
+message LeaveRoomRequest {
+  required uint32 room_id = 1;
+}
 
-message PingRequest {}
+message UserLeavedNtfy {
+  required string user_id = 1;
+}

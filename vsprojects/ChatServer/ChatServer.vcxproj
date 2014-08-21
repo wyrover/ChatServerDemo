@@ -23,6 +23,7 @@
     <ClCompile Include="D:\sdk\jsoncpp\jsoncpp.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\include\chat_server\ChatRoom.h" />
     <ClInclude Include="..\..\include\chat_server\ChatServer.h" />
     <ClInclude Include="..\..\include\chat_server\ChatServerConfig.h" />
     <ClInclude Include="..\..\include\chat_server\ChatServerErrorCode.h" />
@@ -33,12 +34,12 @@
     <ClInclude Include="..\..\include\chat_server\HttpResponse.h" />
     <ClInclude Include="..\..\include\chat_server\Logger.h" />
     <ClInclude Include="..\..\include\chat_server\Macros.h" />
+    <ClInclude Include="..\..\include\chat_server\robin_id.h" />
     <ClInclude Include="..\..\include\chat_server\Session.h" />
     <ClInclude Include="..\..\include\chat_server\TaskPool.h" />
     <ClInclude Include="..\..\include\chat_server\ChatUser.h" />
     <ClInclude Include="..\..\include\chat_server\wapis.h" />
     <ClInclude Include="..\..\include\chat_server\WapisInvokeResult.h" />
-    <ClInclude Include="..\..\src\ChatRoom.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\chat_server\ChatServerMessages.proto" />

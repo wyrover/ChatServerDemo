@@ -1,21 +1,26 @@
-#ifndef CHAT_SERVER_MACROS_H
+ï»¿#ifndef CHAT_SERVER_MACROS_H
 #define CHAT_SERVER_MACROS_H
 
 #include <memory>
+#include <cstdint>
+#include <string>
 
 class Session;
 class ChatServer;
 class ChatUser;
+class ChatRoom;
 
 typedef std::shared_ptr<Session> SessionPtr;
 typedef std::weak_ptr<Session> SessionWkPtr;
 typedef std::shared_ptr<ChatServer> ChatServerPtr;
+typedef std::weak_ptr<ChatServer> ChatServerWkPtr;
 typedef std::shared_ptr<ChatUser> ChatUserPtr;
+typedef std::shared_ptr<ChatRoom> ChatRoomPtr;
 
 enum class SessionRole {
-  Uncertified,         /** Î´ÈÏÖ¤ */
-  User,                /** ÓÃ»§ */
-  Administrator        /** ¹ÜÀíÔ± */
+  Uncertified,         /** æœªè®¤è¯ */
+  User,                /** ç”¨æˆ· */
+  Administrator        /** ç®¡ç†å‘˜ */
 };
 
 #define SESSION_MESSAGE_HANDLER_DECLARE()\
