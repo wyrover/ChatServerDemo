@@ -80,7 +80,7 @@ public:
   }
 
   uint32_t max_room_count() const { return max_room_count_; }
-  uint32_t room_count() const { return rooms_.size(); }
+  uint32_t room_count() const { return static_cast<uint32_t>(rooms_.size()); }
 
   ChatRoomPtr CreatRoom(user_id_t creator,
                         const std::string &room_name,

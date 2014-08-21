@@ -13,7 +13,7 @@ public:
     response_code_ = response_code;
   }
 
-  int response_code() const {
+  long response_code() const {
     return response_code_;
   }
 

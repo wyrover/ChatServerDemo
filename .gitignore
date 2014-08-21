@@ -4,6 +4,7 @@
 /vsprojects/ChatServer/logs
 /vsprojects/ChatClient/Release
 /vsprojects/ChatClient/Debug
+/xcodeprojects/Build
 *.pdb
 *.ilk
 *.log

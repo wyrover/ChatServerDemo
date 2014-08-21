@@ -3,7 +3,9 @@
 #include <chat_server/ChatServerConfig.h>
 #include <boost/asio.hpp>
 #include <thread>
+#ifdef _MSC_VER
 #include <vld.h>
+#endif
 
 using boost::asio::ip::tcp;
 

@@ -2,7 +2,9 @@
 #define CHAT_SERVER_LOGGER_H
 
 #if defined(CHAT_SERVER_LOGGER)
+#ifdef _MSC_VER
 #include <WinSock2.h>
+#endif
 #define _ELPP_THREAD_SAFE
 #include <avxer/easylogging++.h>
 #define CS_LOG_DEBUG(args) LOG(DEBUG) << args

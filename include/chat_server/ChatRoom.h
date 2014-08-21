@@ -36,7 +36,7 @@ public:
   std::string room_name() const { return room_name_; }
   std::string room_passwd() const { return room_passwd_; }
   uint32_t max_user_count() const { return max_user_count_; }
-  uint32_t user_count() const { return users_.size(); }
+  uint32_t user_count() const { return static_cast<uint32_t>(users_.size()); }
   void set_creat_user_id(user_id_t id) { creat_user_id_ = id; }
   void set_room_id(room_id_t id) { room_id_ = id; }
   void set_room_name(const std::string& name) { room_name_ = name; }

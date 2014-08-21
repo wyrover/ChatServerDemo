@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>0E7519E4-2026-4183-9DD4-AF099C70DC9F</string>
+	<key>IDESourceControlProjectName</key>
+	<string>chatserver</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>17879A47-1BCC-4C26-A8AD-9C9932218F18</key>
+		<string>https://github.com/avexer/chat_server.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>xcodeprojects/chatserver/chatserver.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>17879A47-1BCC-4C26-A8AD-9C9932218F18</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/avexer/chat_server.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>17879A47-1BCC-4C26-A8AD-9C9932218F18</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>17879A47-1BCC-4C26-A8AD-9C9932218F18</string>
+			<key>IDESourceControlWCCName</key>
+			<string>chat_server</string>
+		</dict>
+	</array>
+</dict>
+</plist>
