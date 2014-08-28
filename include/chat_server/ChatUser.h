@@ -2,29 +2,25 @@
 #define CHAT_SERVER_USER_H
 
 #include "Macros.h"
+#include "Session.h"
 #include "ChatServerPacket.h"
 #include <memory>
 #include <set>
 #include <string>
-#include <boost/signals2.hpp>
-
-using namespace com::avxer::chat;
-using boost::signals2::connection;
+#include <boost/asio.hpp>
 
 class ChatUser : public std::enable_shared_from_this<ChatUser> {
 public:
-  typedef boost::signals2::signal<void(user_id_t)> on_leave_t;
-  typedef on_leave_t::slot_type on_leave_slot_t;
-
-  static ChatUserPtr Create(SessionPtr session, ChatServerPtr server) {
-    ChatUserPtr user = std::make_shared<ChatUser>(server);
+  static ChatUserPtr Create(SessionPtr session, ChatServerPtr server,
+                            boost::asio::io_service &ios) {
+    ChatUserPtr user = std::make_shared<ChatUser>(server, ios);
     if (user && user->Initial(session)) {
       return user;
     }
     return nullptr;
   }
 
-  ChatUser(ChatServerPtr server);
+  ChatUser(ChatServerPtr server, boost::asio::io_service &ios);
   ~ChatUser();
 
   user_id_t user_id() const { return user_id_; }
@@ -36,8 +32,21 @@ public:
 
   void Write(uint16_t type, const MessageLite &message);
 
-  connection add_user_leave_listener(const on_leave_slot_t &slot) {
-    return on_leave_.connect(slot);
+  void add_to_room(room_id_t room_id) {
+    auto iter = entered_rooms_.find(room_id);
+    if (iter == entered_rooms_.end()) {
+      entered_rooms_.insert(room_id);
+    } else {
+      CS_LOG_ERROR("already enter that room, room id = " << room_id);
+    }
+  }
+  void remove_from_room(room_id_t room_id) {
+    auto iter = entered_rooms_.find(room_id);
+    if (iter != entered_rooms_.end()) {
+      entered_rooms_.erase(iter);
+    } else {
+      CS_LOG_ERROR("have not enter that room, room id = " << room_id);
+    }
   }
 
 private:
@@ -47,15 +56,16 @@ private:
                      uint16_t message_type,
                      const void *body,
                      int16_t size);
-  void OnClose(SessionPtr session);
+  void OnClose(SessionPtr session, CloseReason reason);
 
-  void SendEnterRoomResponse(int32_t error_code);
-
-  bool HandleUserLogoutRequest(UserLogoutRequest& message);
-  bool HandleCreatRoomRequest(CreatRoomRequest& message);
-  bool HandleEnterRoomRequest(EnterRoomRequest& message);
-  bool HandleLeaveRoomRequest(LeaveRoomRequest& message);
-  bool HandleGroupChatRequest(GroupChatRequest& message);
+  bool HandleUserLogoutRequest();
+  bool HandleCreatRoomRequest(const CreatRoomRequest& message);
+  bool HandleEnterRoomRequest(const EnterRoomRequest& message);
+  bool HandleLeaveRoomRequest(const LeaveRoomRequest& message);
+  bool HandleRoomChatRequest(const RoomChatRequest& message);
+  
+  bool HandlePing(const Ping& message);
+  bool HandleKeepAliveRequest(const KeepAliveRequest& message);
 
 private:
   SessionPtr session_;
@@ -63,7 +73,7 @@ private:
   user_id_t user_id_;
   std::string nick_name_;
   std::set<room_id_t> entered_rooms_;
-  on_leave_t on_leave_;
+  boost::asio::deadline_timer offline_timer_;
 };
 
 #endif /* CHAT_SERVER_USER_H */

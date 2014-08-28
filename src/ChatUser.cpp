@@ -2,16 +2,16 @@
 #include <chat_server/Logger.h>
 #include <chat_server/wapis.h>
 #include <chat_server/ChatServerErrorCode.h>
-#include <chat_server/Session.h>
 #include <chat_server/ChatServer.h>
 #include <chat_server/ChatRoom.h>
 #include <cassert>
 
-ChatUser::ChatUser(ChatServerPtr server)
-  : server_(server) {
+ChatUser::ChatUser(ChatServerPtr server, boost::asio::io_service &ios)
+  : server_(server), offline_timer_(ios) {
 }
 
 ChatUser::~ChatUser() {
+  CS_LOG_DEBUG("ChatUser destroyed");
 }
 
 bool ChatUser::Initial(SessionPtr session) {
@@ -19,29 +19,37 @@ bool ChatUser::Initial(SessionPtr session) {
   return true;
 }
 
-void ChatUser::set_session(SessionPtr session) { 
+void ChatUser::set_session(SessionPtr session) {
   session_ = session;
-  std::weak_ptr<ChatUser> wself(shared_from_this());
-  session_->set_on_message_cb([wself](SessionPtr session,
-    uint16_t type,
-    const void* body,
-    int16_t size) -> bool {
-    if (ChatUserPtr self = wself.lock()) {
-      return self->HandleMessage(session, type, body, size);
-    } else {
-      return false;
+  if (session_ != nullptr) {
+    boost::system::error_code ec;
+    offline_timer_.cancel(ec);
+    if (ec) {
+      CS_LOG_ERROR("offline_timer_ cancel failed: " << ec.message());
     }
-  });
-  session_->set_on_close_cb([wself](SessionPtr session) {
-    if (ChatUserPtr self = wself.lock()) {
-      self->OnClose(session);
-    }
-  });
+    std::weak_ptr<ChatUser> wself(shared_from_this());
+    session_->set_on_message_cb([wself](SessionPtr session,
+      uint16_t type,
+      const void* body,
+      int16_t size) -> bool {
+      if (ChatUserPtr self = wself.lock()) {
+        return self->HandleMessage(session, type, body, size);
+      } else {
+        return false;
+      }
+    });
+    session_->set_on_close_cb([wself](SessionPtr session, CloseReason reason) {
+      if (ChatUserPtr self = wself.lock()) {
+        self->OnClose(session, reason);
+      }
+    });
+  }
 }
 
 void ChatUser::Write(uint16_t type, const MessageLite &message) {
-  if (session_ != nullptr) {
-    session_->Write(type, message);
+  SessionPtr session = session_;
+  if (session != nullptr) {
+    session->Write(type, message);
   }
 }
 
@@ -56,7 +64,7 @@ bool ChatUser::HandleMessage(SessionPtr session,
     if (!message.ParseFromArray(body, size)) {
       break;
     }
-    return HandleUserLogoutRequest(message);
+    return HandleUserLogoutRequest();
   }
   case MSG_CREAT_ROOM:
   {
@@ -74,13 +82,13 @@ bool ChatUser::HandleMessage(SessionPtr session,
     }
     return HandleEnterRoomRequest(message);
   }
-  case MSG_GROUP_MSG:
+  case MSG_ROOM_MSG:
   {
-    GroupChatRequest message;
+    RoomChatRequest message;
     if (!message.ParseFromArray(body, size)) {
       break;
     }
-    return HandleGroupChatRequest(message);
+    return HandleRoomChatRequest(message);
   }
   case MSG_LEAVE_ROOM:
   {
@@ -91,27 +99,68 @@ bool ChatUser::HandleMessage(SessionPtr session,
     return HandleLeaveRoomRequest(message);
   }
     break;
-  default:
+  case MSG_PING:
+  {
+    Ping message;
+    if (!message.ParseFromArray(body, size)) {
+      break;
+    }
+    return HandlePing(message);
+  }
     break;
+  case MSG_KEEP_ALIVE:
+  {
+    KeepAliveRequest message;
+    if (!message.ParseFromArray(body, size)) {
+      break;
+    }
+    return HandleKeepAliveRequest(message);
+  }
+    break;
+  default:
+    CS_LOG_ERROR("unknown message type");
+    break;
+  }
+  CS_LOG_ERROR("message parse failed");
+  return false;
+}
+
+void ChatUser::OnClose(SessionPtr session, CloseReason reason) {
+  assert(reason != CloseReason::UNKNOWN);
+  const bool is_offline = (CloseReason::READEOF == reason
+    || CloseReason::NORESPONSE == reason);
+  const uint32_t wait = server_->conf().offline_wait_seconds();
+  if (is_offline && wait > 0) {
+    CS_LOG_DEBUG("user offline");
+    offline_timer_.expires_from_now(boost::posix_time::seconds(wait));
+    auto self(shared_from_this());
+    offline_timer_.async_wait([self](const boost::system::error_code& ec) {
+      CS_LOG_DEBUG("user offline time out");
+      self->HandleUserLogoutRequest();
+      self->server_->remove_user(self);
+    });
+  } else {
+    HandleUserLogoutRequest();
+    server_->remove_user(shared_from_this());
+  }
+  set_session(nullptr);
+}
+
+bool ChatUser::HandleUserLogoutRequest() {
+  auto iter = entered_rooms_.begin();
+  while (iter != entered_rooms_.end()) {
+    const room_id_t room_id = *iter++;
+    ChatRoomPtr room = server_->FindRoom(room_id);
+    if (room != nullptr) {
+      room->HandleUserLogoutRequest(shared_from_this());
+    } else {
+      CS_LOG_ERROR("ChatUser::HandleUserLogoutRequest: room not found");
+    }
   }
   return false;
 }
 
-void ChatUser::OnClose(SessionPtr session) {
-  server_->remove_user(shared_from_this());
-}
-
-void ChatUser::SendEnterRoomResponse(int32_t error_code) {
-  EnterRoomResponse response;
-  response.set_error_code(error_code);
-  Write(MSG_ENTER_ROOM, response);
-}
-
-bool ChatUser::HandleUserLogoutRequest(UserLogoutRequest& message) {
-  return false;
-}
-
-bool ChatUser::HandleCreatRoomRequest(CreatRoomRequest& message) {
+bool ChatUser::HandleCreatRoomRequest(const CreatRoomRequest& message) {
   CreatRoomResponse response;
   do 
   {
@@ -119,10 +168,11 @@ bool ChatUser::HandleCreatRoomRequest(CreatRoomRequest& message) {
       response.set_error_code(ENOROOMRESOURCE);
       break;
     }
-    ChatRoomPtr room = server_->CreatRoom(user_id_, message.room_name(),
+    ChatRoomPtr room = server_->CreatRoom(user_id_,
+                                          message.room_name(),
                                           message.room_passwd(),
                                           message.max_user_count());
-    entered_rooms_.insert(room->room_id());
+    add_to_room(room->room_id());
     response.set_error_code(ESUCCEED);
     response.set_room_id(room->room_id());
   } while (false);
@@ -130,63 +180,61 @@ bool ChatUser::HandleCreatRoomRequest(CreatRoomRequest& message) {
   return true;
 }
 
-bool ChatUser::HandleEnterRoomRequest(EnterRoomRequest& message) {
+bool ChatUser::HandleEnterRoomRequest(const EnterRoomRequest& message) {
   ChatRoomPtr room = server_->FindRoom(message.room_id());
+  EnterRoomResponse response;
   do
   {
     if (!room) {
-      SendEnterRoomResponse(EROOMNAMENOTEXIST);
+      response.set_error_code(EROOMNAMENOTEXIST);
       break;
     }
     if (room->is_user_exist(user_id_)) {
-      SendEnterRoomResponse(EALREADYINTHISROOM);
+      response.set_error_code(EALREADYINTHISROOM);
       break;
     }
     if (room->user_count() == room->max_user_count() ) {
-      SendEnterRoomResponse(EROOMFULL);
+      response.set_error_code(EROOMFULL);
       break;
     }
     if (room->room_passwd() != message.room_passwd()) {
-      SendEnterRoomResponse(EROOMPASSWDERR);
+      response.set_error_code(EROOMPASSWDERR);
       break;
     }
-    room->add_user(user_id_);
-    entered_rooms_.insert(room->room_id());
-    SendEnterRoomResponse(ESUCCEED);
-
-    UserEnteredNtfy ntfy;
-    ntfy.set_user_id(user_id_);
-    ntfy.set_nick_name(user_id_);
-    room->BroadcastMessage(MSG_USER_ENTERED, ntfy);
-  } while (false);
-  return true;
-}
-
-bool ChatUser::HandleLeaveRoomRequest(LeaveRoomRequest& message) {
-  do {
-    auto iter = entered_rooms_.find(message.room_id());
-    if (iter == entered_rooms_.end()) {
-      CS_LOG_DEBUG("You have not entered that room");
-      break;
-    }
-    entered_rooms_.erase(iter);
-    on_leave_(user_id_);
-  } while (false);
-  return true;
-}
-
-bool ChatUser::HandleGroupChatRequest(GroupChatRequest& message) {
-  if (entered_rooms_.find(message.room_id()) == entered_rooms_.end()) {
-    CS_LOG_ERROR("You have not entered that room");
+    room->HandleEnterRoomRequest(shared_from_this());
     return true;
-  }
+  } while (false);
+  Write(MSG_ENTER_ROOM, response);
+  return true;
+}
+
+bool ChatUser::HandleLeaveRoomRequest(const LeaveRoomRequest& message) {
   ChatRoomPtr room = server_->FindRoom(message.room_id());
   if (room != nullptr) {
-    GroupChatNtfy ntfy;
-    ntfy.set_room_id(message.room_id());
-    ntfy.set_message_content(message.message_content());
-    ntfy.set_sender_user_id(user_id_);
-    room->BroadcastMessage(MSG_GROUP_MSG, ntfy);
+    room->HandleLeaveRoomRequest(shared_from_this());
+  } else {
+    CS_LOG_ERROR("ChatUser::HandleLeaveRoomRequest: room not found");
   }
+  return true;
+}
+
+bool ChatUser::HandleRoomChatRequest(const RoomChatRequest& message) {
+  ChatRoomPtr room = server_->FindRoom(message.room_id());
+  if (room != nullptr) {
+    room->HandleRoomChatRequest(shared_from_this(), message);
+  } else {
+    CS_LOG_ERROR("ChatUser::HandleRoomChatRequest: room not found");
+  }
+  return true;
+}
+
+bool ChatUser::HandlePing(const Ping& message) {
+  Write(MSG_PING, message);
+  return true;
+}
+
+bool ChatUser::HandleKeepAliveRequest(const KeepAliveRequest& message) {
+  KeepAliveResponse response;
+  Write(MSG_KEEP_ALIVE, response);
   return true;
 }

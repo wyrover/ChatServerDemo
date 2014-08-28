@@ -14,24 +14,24 @@
 #include "TaskPool.h"
 #include "ChatUser.h"
 #include "robin_id.h"
+#include "ChatServerConfig.h"
 
 using boost::asio::ip::tcp;
 using boost::asio::io_service;
+using boost::asio::deadline_timer;
 using boost::system::error_code;
 
 class ChatServer : public std::enable_shared_from_this<ChatServer> {
 public:
-  static ChatServerPtr create(io_service& ios,
-                              uint32_t max_room_count,
-                              const tcp::endpoint& endpoint) {
-    ChatServerPtr server = std::make_shared<ChatServer>(ios, max_room_count);
-    if (server && server->initial(endpoint)) {
+  static ChatServerPtr create(io_service& ios) {
+    ChatServerPtr server = std::make_shared<ChatServer>(ios);
+    if (server && server->initial()) {
       return server;
     }
     return nullptr;
   }
 
-  ChatServer(io_service& ios, uint32_t max_room_count);
+  ChatServer(io_service& ios);
   ~ChatServer();
 
   void stop() {
@@ -71,15 +71,7 @@ public:
     }
   }
 
-  io_service& ios() {
-    return ios_;
-  }
-
-  TaskPool& task_pool() {
-    return task_pool_;
-  }
-
-  uint32_t max_room_count() const { return max_room_count_; }
+  uint32_t max_room_count() const { return conf_.max_room_count(); }
   uint32_t room_count() const { return static_cast<uint32_t>(rooms_.size()); }
 
   ChatRoomPtr CreatRoom(user_id_t creator,
@@ -90,11 +82,14 @@ public:
   ChatRoomPtr FindRoom(const room_id_t& id);
   ChatUserPtr FindUser(const user_id_t& id);
 
+  ChatServerConfig& conf() { return conf_; }
+
 private:
-  bool initial(const tcp::endpoint& endpoint) {
+  bool initial() {
     do 
     {
-      boost::system::error_code ec;
+      tcp::endpoint endpoint(tcp::v4(), conf_.listen_port());
+      error_code ec;
       acceptor_.open(endpoint.protocol(), ec);
       if (ec) {
         CS_LOG_ERROR("open failed: " << ec.message());
@@ -111,6 +106,7 @@ private:
         break;
       }
       AsyncAccept();
+      OnTimer();
       return true;
     } while (false);
     return false;
@@ -131,7 +127,8 @@ private:
         session->set_on_message_cb(std::bind(&ChatServer::HandleMessage, self,
           std::placeholders::_1, std::placeholders::_2,
           std::placeholders::_3, std::placeholders::_4));
-        session->set_on_close_cb(std::bind(&ChatServer::OnClose, self, std::placeholders::_1));
+        session->set_on_close_cb(std::bind(&ChatServer::OnClose, self, std::placeholders::_1,
+          std::placeholders::_2));
         uncertified_sessions_.insert(session);
       } else {
         CS_LOG_ERROR("async_accept error: " << error.message());
@@ -144,31 +141,26 @@ private:
                      uint16_t message_type,
                      const void *body,
                      int16_t size);
-  void OnClose(SessionPtr session);
+  void OnClose(SessionPtr session, CloseReason);
   bool HandleUserLogin(SessionPtr session, UserLoginRequest& message);
   void SendLoginResponse(SessionPtr session, int32_t error_code);
 
-  room_id_t unused_room_id() {
-    while (true) {
-      room_id_t id = static_cast<room_id_t>(robin_id_.next_id());
-      if (rooms_.find(id) == rooms_.end()) {
-        return id;
-      }
-    }
-  }
+  void OnTimer();
 
 private:
-  const uint32_t max_room_count_;
   io_service& ios_;
   tcp::acceptor acceptor_;
   tcp::socket socket_;
   TaskPool task_pool_;
+  deadline_timer timer_;
 
   std::set<SessionPtr> uncertified_sessions_;
 
   std::set<ChatUserPtr> users_;
   robin_id robin_id_;
   std::map<room_id_t, ChatRoomPtr> rooms_;
+
+  ChatServerConfig conf_;
 };
 
 #endif /* CHAT_SERVER_CHATSERVER_H */

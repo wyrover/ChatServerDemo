@@ -10,7 +10,6 @@
 #include <chat_server/ChatServerErrorCode.h>
 
 using boost::asio::ip::tcp;
-using namespace com::avxer::chat;
 
 class ChatClient : public std::enable_shared_from_this<ChatClient> {
 public:
@@ -33,7 +32,8 @@ public:
   void Logout();
   void CreatRoom(const std::string &room_name, const std::string& room_passwd, uint32_t max_user_count);
   void EnterRoom(const room_id_t& room_id, const std::string& room_passwd);
-  void SendGroupMessage(const room_id_t& room_id, const void* data, uint32_t size);
+  void RoomMessage(const room_id_t& room_id, const void* data, uint32_t size);
+  void LeaveRoom(const room_id_t& room_id);
 
 private:
   bool Initial(tcp::resolver::iterator endpoint_iterator) {
@@ -63,7 +63,7 @@ private:
   bool HandleEnterRoomResponse(const EnterRoomResponse& message);
   bool HandleUserEntered(const UserEnteredNtfy& message);
   bool HandleUserLeaved(const UserLeavedNtfy& message);
-  bool HandleGroupMessage(const GroupChatNtfy& message);
+  bool HandleRoomMessage(const GroupChatNtfy& message);
 
 private:
   boost::asio::io_service &ios_;

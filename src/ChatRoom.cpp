@@ -30,3 +30,42 @@ void ChatRoom::BroadcastMessage(uint16_t type, const MessageLite &message) {
     }
   }
 }
+
+void ChatRoom::HandleEnterRoomRequest(ChatUserPtr user) {
+  add_user(user->user_id());
+  user->add_to_room(room_id_);
+  UserEnteredNtfy ntfy;
+  ntfy.set_user_id(user->user_id());
+  ntfy.set_nick_name(user->user_id());
+  BroadcastMessage(MSG_USER_ENTERED, ntfy);
+}
+
+void ChatRoom::HandleRoomChatRequest(ChatUserPtr user, const RoomChatRequest& message) {
+  GroupChatNtfy ntfy;
+  ntfy.set_room_id(room_id_);
+  ntfy.set_message_content(message.message_content());
+  ntfy.set_sender_user_id(user->user_id());
+  BroadcastMessage(MSG_ROOM_MSG, ntfy);
+}
+
+void ChatRoom::HandleLeaveRoomRequest(ChatUserPtr user) {
+  auto iter = users_.find(user->user_id());
+  if (iter == users_.end()) {
+    CS_LOG_ERROR("ChatRoom::HandleLeaveRoomRequest: user not in this room");
+    return;
+  }
+  UserLeavedNtfy ntfy;
+  ntfy.set_user_id(user->user_id());
+  BroadcastMessage(MSG_USER_LEAVED, ntfy);
+  users_.erase(iter);
+  user->remove_from_room(room_id_);
+
+  if (users_.empty()) {
+    CS_LOG_DEBUG("all user has left, room will be dismissed");
+    server_->remove_room(room_id_);
+  }
+}
+
+void ChatRoom::HandleUserLogoutRequest(ChatUserPtr user) {
+  HandleLeaveRoomRequest(user);
+}

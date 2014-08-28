@@ -38,12 +38,20 @@ void ChatClient::EnterRoom(const room_id_t& room_id, const std::string& room_pas
   }
 }
 
-void ChatClient::SendGroupMessage(const room_id_t& room_id, const void* data, uint32_t size) {
-  GroupChatRequest message;
+void ChatClient::RoomMessage(const room_id_t& room_id, const void* data, uint32_t size) {
+  RoomChatRequest message;
   message.set_room_id(room_id);
   message.set_message_content(data, size);
   if (session_) {
-    session_->Write(MSG_GROUP_MSG, message);
+    session_->Write(MSG_ROOM_MSG, message);
+  }
+}
+
+void ChatClient::LeaveRoom(const room_id_t& room_id) {
+  LeaveRoomRequest message;
+  message.set_room_id(room_id);
+  if (session_) {
+    session_->Write(MSG_LEAVE_ROOM, message);
   }
 }
 
@@ -93,11 +101,11 @@ bool ChatClient::HandleMessage(SessionPtr session, uint16_t type, const void* bo
     }
   }
     break;
-  case MSG_GROUP_MSG:
+  case MSG_ROOM_MSG:
   {
     GroupChatNtfy message;
     if (parse_ok = message.ParseFromArray(body, size)) {
-      handled = HandleGroupMessage(message);
+      handled = HandleRoomMessage(message);
     }
   }
     break;
@@ -144,7 +152,7 @@ bool ChatClient::HandleUserLeaved(const UserLeavedNtfy& message) {
   return true;
 }
 
-bool ChatClient::HandleGroupMessage(const GroupChatNtfy& message) {
+bool ChatClient::HandleRoomMessage(const GroupChatNtfy& message) {
   CS_LOG_DEBUG("[" << message.sender_user_id() << "]:" << message.message_content());
   return true;
 }

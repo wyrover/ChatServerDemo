@@ -5,6 +5,7 @@ using namespace boost::asio;
 
 Session::Session(io_service &ios, tcp::socket &&socket)
   : ios_(ios), socket_(std::move(socket)), header_data_(PACKET_HEADER_LENGTH) {
+  last_heart_beat_ = std::chrono::steady_clock::now();
 }
 
 bool Session::Initial() {
@@ -13,17 +14,19 @@ bool Session::Initial() {
 }
 
 Session::~Session() {
+  CS_LOG_DEBUG("Session destroyed");
 }
 
 void Session::AsyncReadHeader() {
   auto self(shared_from_this());
   async_read(socket_, buffer(&header_data_[0], PACKET_HEADER_LENGTH),
     [this, self](boost::system::error_code ec, std::size_t size) {
+    last_heart_beat_ = std::chrono::steady_clock::now();
     if (!ec) {
       AsyncReadBody();
     } else {
       CS_LOG_ERROR("async_read error: " << ec.message());
-      self->Disconnect(true);
+      self->Disconnect(CloseReason::READEOF);
     }
   });
 }
@@ -37,6 +40,7 @@ void Session::AsyncReadBody() {
     auto self(shared_from_this());
     async_read(socket_, buffer(&body_data_[0], body_length),
       [this, self](boost::system::error_code ec, std::size_t size) {
+      last_heart_beat_ = std::chrono::steady_clock::now();
       if (!ec) {
         PacketHeader header;
         header.Deserialize(header_data_);
@@ -46,7 +50,7 @@ void Session::AsyncReadBody() {
         }
       } else {
         CS_LOG_ERROR("async_read error: " << ec.message());
-        self->Disconnect(true);
+        self->Disconnect(CloseReason::READEOF);
       }
     });
   } else {
@@ -91,7 +95,7 @@ bool Session::HandleMessage(uint16_t type, const void *body, int16_t size) {
     handled = on_message_cb_(shared_from_this(), type, body, size);
   }
   if (!handled) {
-    Disconnect(true);
+    Disconnect(CloseReason::MESSAGEUNHANDLED);
   }
   return handled;
 }

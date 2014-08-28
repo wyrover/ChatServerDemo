@@ -1,4 +1,7 @@
 {
-	"listen_port":30000,
-	"max_room_count":100
+  "listen_port":30000,
+  "max_room_count": 100,
+  "heart_beat_seconds": 6000,
+  "offline_wait_seconds": 10,
+  "web_service_url": "127.0.0.1:3000"
 }

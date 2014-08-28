@@ -35,13 +35,13 @@
     <ClCompile Include="..\..\src\HttpClient.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="D:\sdk\jsoncpp\jsoncpp.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\WapisInvokeResult.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\ChatUser.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\deps\jsoncpp.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

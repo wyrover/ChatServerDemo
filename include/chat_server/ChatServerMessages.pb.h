@@ -41,11 +41,14 @@ class CreatRoomRequest;
 class CreatRoomResponse;
 class EnterRoomRequest;
 class EnterRoomResponse;
-class GroupChatRequest;
+class RoomChatRequest;
 class GroupChatNtfy;
 class UserEnteredNtfy;
 class LeaveRoomRequest;
 class UserLeavedNtfy;
+class Ping;
+class KeepAliveRequest;
+class KeepAliveResponse;
 
 // ===================================================================
 
@@ -695,38 +698,38 @@ class EnterRoomResponse : public ::google::protobuf::MessageLite {
 };
 // -------------------------------------------------------------------
 
-class GroupChatRequest : public ::google::protobuf::MessageLite {
+class RoomChatRequest : public ::google::protobuf::MessageLite {
  public:
-  GroupChatRequest();
-  virtual ~GroupChatRequest();
+  RoomChatRequest();
+  virtual ~RoomChatRequest();
 
-  GroupChatRequest(const GroupChatRequest& from);
+  RoomChatRequest(const RoomChatRequest& from);
 
-  inline GroupChatRequest& operator=(const GroupChatRequest& from) {
+  inline RoomChatRequest& operator=(const RoomChatRequest& from) {
     CopyFrom(from);
     return *this;
   }
 
-  static const GroupChatRequest& default_instance();
+  static const RoomChatRequest& default_instance();
 
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   // Returns the internal default instance pointer. This function can
   // return NULL thus should not be used by the user. This is intended
   // for Protobuf internal code. Please use default_instance() declared
   // above instead.
-  static inline const GroupChatRequest* internal_default_instance() {
+  static inline const RoomChatRequest* internal_default_instance() {
     return default_instance_;
   }
   #endif
 
-  void Swap(GroupChatRequest* other);
+  void Swap(RoomChatRequest* other);
 
   // implements Message ----------------------------------------------
 
-  GroupChatRequest* New() const;
+  RoomChatRequest* New() const;
   void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
-  void CopyFrom(const GroupChatRequest& from);
-  void MergeFrom(const GroupChatRequest& from);
+  void CopyFrom(const RoomChatRequest& from);
+  void MergeFrom(const RoomChatRequest& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -767,7 +770,7 @@ class GroupChatRequest : public ::google::protobuf::MessageLite {
   inline ::std::string* release_message_content();
   inline void set_allocated_message_content(::std::string* message_content);
 
-  // @@protoc_insertion_point(class_scope:com.avxer.chat.GroupChatRequest)
+  // @@protoc_insertion_point(class_scope:com.avxer.chat.RoomChatRequest)
  private:
   inline void set_has_room_id();
   inline void clear_has_room_id();
@@ -789,7 +792,7 @@ class GroupChatRequest : public ::google::protobuf::MessageLite {
   friend void protobuf_ShutdownFile_ChatServerMessages_2eproto();
 
   void InitAsDefaultInstance();
-  static GroupChatRequest* default_instance_;
+  static RoomChatRequest* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -1177,6 +1180,235 @@ class UserLeavedNtfy : public ::google::protobuf::MessageLite {
 
   void InitAsDefaultInstance();
   static UserLeavedNtfy* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class Ping : public ::google::protobuf::MessageLite {
+ public:
+  Ping();
+  virtual ~Ping();
+
+  Ping(const Ping& from);
+
+  inline Ping& operator=(const Ping& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const Ping& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const Ping* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(Ping* other);
+
+  // implements Message ----------------------------------------------
+
+  Ping* New() const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const Ping& from);
+  void MergeFrom(const Ping& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required uint64 time_stamp = 1;
+  inline bool has_time_stamp() const;
+  inline void clear_time_stamp();
+  static const int kTimeStampFieldNumber = 1;
+  inline ::google::protobuf::uint64 time_stamp() const;
+  inline void set_time_stamp(::google::protobuf::uint64 value);
+
+  // @@protoc_insertion_point(class_scope:com.avxer.chat.Ping)
+ private:
+  inline void set_has_time_stamp();
+  inline void clear_has_time_stamp();
+
+  ::google::protobuf::uint64 time_stamp_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_ChatServerMessages_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_ChatServerMessages_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_ChatServerMessages_2eproto();
+  friend void protobuf_ShutdownFile_ChatServerMessages_2eproto();
+
+  void InitAsDefaultInstance();
+  static Ping* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class KeepAliveRequest : public ::google::protobuf::MessageLite {
+ public:
+  KeepAliveRequest();
+  virtual ~KeepAliveRequest();
+
+  KeepAliveRequest(const KeepAliveRequest& from);
+
+  inline KeepAliveRequest& operator=(const KeepAliveRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const KeepAliveRequest& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const KeepAliveRequest* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(KeepAliveRequest* other);
+
+  // implements Message ----------------------------------------------
+
+  KeepAliveRequest* New() const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const KeepAliveRequest& from);
+  void MergeFrom(const KeepAliveRequest& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:com.avxer.chat.KeepAliveRequest)
+ private:
+
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[1];
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_ChatServerMessages_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_ChatServerMessages_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_ChatServerMessages_2eproto();
+  friend void protobuf_ShutdownFile_ChatServerMessages_2eproto();
+
+  void InitAsDefaultInstance();
+  static KeepAliveRequest* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class KeepAliveResponse : public ::google::protobuf::MessageLite {
+ public:
+  KeepAliveResponse();
+  virtual ~KeepAliveResponse();
+
+  KeepAliveResponse(const KeepAliveResponse& from);
+
+  inline KeepAliveResponse& operator=(const KeepAliveResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const KeepAliveResponse& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const KeepAliveResponse* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(KeepAliveResponse* other);
+
+  // implements Message ----------------------------------------------
+
+  KeepAliveResponse* New() const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const KeepAliveResponse& from);
+  void MergeFrom(const KeepAliveResponse& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:com.avxer.chat.KeepAliveResponse)
+ private:
+
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[1];
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_ChatServerMessages_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_ChatServerMessages_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_ChatServerMessages_2eproto();
+  friend void protobuf_ShutdownFile_ChatServerMessages_2eproto();
+
+  void InitAsDefaultInstance();
+  static KeepAliveResponse* default_instance_;
 };
 // ===================================================================
 
@@ -1693,78 +1925,78 @@ inline void EnterRoomResponse::set_error_code(::google::protobuf::int32 value) {
 
 // -------------------------------------------------------------------
 
-// GroupChatRequest
+// RoomChatRequest
 
 // required uint32 room_id = 1;
-inline bool GroupChatRequest::has_room_id() const {
+inline bool RoomChatRequest::has_room_id() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void GroupChatRequest::set_has_room_id() {
+inline void RoomChatRequest::set_has_room_id() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void GroupChatRequest::clear_has_room_id() {
+inline void RoomChatRequest::clear_has_room_id() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void GroupChatRequest::clear_room_id() {
+inline void RoomChatRequest::clear_room_id() {
   room_id_ = 0u;
   clear_has_room_id();
 }
-inline ::google::protobuf::uint32 GroupChatRequest::room_id() const {
+inline ::google::protobuf::uint32 RoomChatRequest::room_id() const {
   return room_id_;
 }
-inline void GroupChatRequest::set_room_id(::google::protobuf::uint32 value) {
+inline void RoomChatRequest::set_room_id(::google::protobuf::uint32 value) {
   set_has_room_id();
   room_id_ = value;
 }
 
 // required bytes message_content = 2;
-inline bool GroupChatRequest::has_message_content() const {
+inline bool RoomChatRequest::has_message_content() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void GroupChatRequest::set_has_message_content() {
+inline void RoomChatRequest::set_has_message_content() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void GroupChatRequest::clear_has_message_content() {
+inline void RoomChatRequest::clear_has_message_content() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void GroupChatRequest::clear_message_content() {
+inline void RoomChatRequest::clear_message_content() {
   if (message_content_ != &::google::protobuf::internal::kEmptyString) {
     message_content_->clear();
   }
   clear_has_message_content();
 }
-inline const ::std::string& GroupChatRequest::message_content() const {
+inline const ::std::string& RoomChatRequest::message_content() const {
   return *message_content_;
 }
-inline void GroupChatRequest::set_message_content(const ::std::string& value) {
+inline void RoomChatRequest::set_message_content(const ::std::string& value) {
   set_has_message_content();
   if (message_content_ == &::google::protobuf::internal::kEmptyString) {
     message_content_ = new ::std::string;
   }
   message_content_->assign(value);
 }
-inline void GroupChatRequest::set_message_content(const char* value) {
+inline void RoomChatRequest::set_message_content(const char* value) {
   set_has_message_content();
   if (message_content_ == &::google::protobuf::internal::kEmptyString) {
     message_content_ = new ::std::string;
   }
   message_content_->assign(value);
 }
-inline void GroupChatRequest::set_message_content(const void* value, size_t size) {
+inline void RoomChatRequest::set_message_content(const void* value, size_t size) {
   set_has_message_content();
   if (message_content_ == &::google::protobuf::internal::kEmptyString) {
     message_content_ = new ::std::string;
   }
   message_content_->assign(reinterpret_cast<const char*>(value), size);
 }
-inline ::std::string* GroupChatRequest::mutable_message_content() {
+inline ::std::string* RoomChatRequest::mutable_message_content() {
   set_has_message_content();
   if (message_content_ == &::google::protobuf::internal::kEmptyString) {
     message_content_ = new ::std::string;
   }
   return message_content_;
 }
-inline ::std::string* GroupChatRequest::release_message_content() {
+inline ::std::string* RoomChatRequest::release_message_content() {
   clear_has_message_content();
   if (message_content_ == &::google::protobuf::internal::kEmptyString) {
     return NULL;
@@ -1774,7 +2006,7 @@ inline ::std::string* GroupChatRequest::release_message_content() {
     return temp;
   }
 }
-inline void GroupChatRequest::set_allocated_message_content(::std::string* message_content) {
+inline void RoomChatRequest::set_allocated_message_content(::std::string* message_content) {
   if (message_content_ != &::google::protobuf::internal::kEmptyString) {
     delete message_content_;
   }
@@ -2196,6 +2428,40 @@ inline void UserLeavedNtfy::set_allocated_user_id(::std::string* user_id) {
     user_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   }
 }
+
+// -------------------------------------------------------------------
+
+// Ping
+
+// required uint64 time_stamp = 1;
+inline bool Ping::has_time_stamp() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void Ping::set_has_time_stamp() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void Ping::clear_has_time_stamp() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void Ping::clear_time_stamp() {
+  time_stamp_ = GOOGLE_ULONGLONG(0);
+  clear_has_time_stamp();
+}
+inline ::google::protobuf::uint64 Ping::time_stamp() const {
+  return time_stamp_;
+}
+inline void Ping::set_time_stamp(::google::protobuf::uint64 value) {
+  set_has_time_stamp();
+  time_stamp_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// KeepAliveRequest
+
+// -------------------------------------------------------------------
+
+// KeepAliveResponse
 
 
 // @@protoc_insertion_point(namespace_scope)

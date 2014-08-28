@@ -1,24 +1,22 @@
-﻿#include <chat_server/Logger.h>
-#include <chat_server/ChatServer.h>
-#include <chat_server/ChatServerConfig.h>
+﻿#include <thread>
+#include <iostream>
 #include <boost/asio.hpp>
-#include <thread>
+#include <chat_server/Logger.h>
+#include <chat_server/ChatServer.h>
 #ifdef _MSC_VER
 #include <vld.h>
 #endif
 
-using boost::asio::ip::tcp;
-
-#define COMMAND_QUIT "quit"
-
+#ifdef CHAT_SERVER_LOGGER
 _INITIALIZE_EASYLOGGINGPP
+#endif
 
 int main(int argc, char* argv[]) {
+#ifdef CHAT_SERVER_LOGGER
   el::Loggers::reconfigureAllLoggers(el::Configurations("./easylogging.conf"));
-  ChatServerConfig conf;
-  tcp::endpoint endpoint(tcp::v4(), conf.listen_port());
+#endif
   boost::asio::io_service ios;
-  ChatServerPtr server = ChatServer::create(ios, conf.max_room_count(), endpoint);
+  ChatServerPtr server = ChatServer::create(ios);
   if (!server) {
     CS_LOG_ERROR("chat server init failed");
     return -1;
@@ -30,7 +28,7 @@ int main(int argc, char* argv[]) {
   while (!exit) {
     std::string cmd;
     std::cin >> cmd;
-    if (cmd == COMMAND_QUIT) {
+    if (cmd == "quit") {
       std::cout << "Are sure to stop server?(y/n):";
       char choose;
       std::cin >> choose;

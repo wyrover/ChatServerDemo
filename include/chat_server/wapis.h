@@ -4,11 +4,15 @@
 #include <string>
 #include <memory>
 #include "WapisInvokeResult.h"
+#include "ChatServerConfig.h"
 
 class AccountService {
 public:
-  static LoginResultPtr Login(const std::string& login_name,
-                              const std::string& login_passwd);
+  LoginResultPtr Login(const std::string& login_name,
+                       const std::string& login_passwd);
+
+private:
+  ChatServerConfig conf_;
 };
 
 #endif /* CHAT_SERVER_WAPIS_H */

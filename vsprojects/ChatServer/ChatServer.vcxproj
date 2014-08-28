@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\deps\jsoncpp.cpp" />
     <ClCompile Include="..\..\include\chat_server\ChatServerMessages.pb.cc" />
     <ClCompile Include="..\..\src\ChatRoom.cpp" />
     <ClCompile Include="..\..\src\ChatServer.cpp" />
@@ -20,7 +21,6 @@
     <ClCompile Include="..\..\src\ChatUser.cpp" />
     <ClCompile Include="..\..\src\wapis.cpp" />
     <ClCompile Include="..\..\src\WapisInvokeResult.cpp" />
-    <ClCompile Include="D:\sdk\jsoncpp\jsoncpp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\chat_server\ChatRoom.h" />
@@ -89,7 +89,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;_WIN32_WINNT=0x0501;_SCL_SECURE_NO_WARNINGS;CHAT_SERVER_LOGGER;CHAT_SERVER_DEBUG;_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\include;$(SolutionDir)..\deps;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -106,7 +106,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;_WIN32_WINNT=0x0501;_ELPP_THREAD_SAFE;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\include;$(SolutionDir)..\deps;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

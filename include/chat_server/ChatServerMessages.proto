@@ -33,7 +33,7 @@ message EnterRoomResponse {
   required int32 error_code = 1;
 }
 
-message GroupChatRequest {
+message RoomChatRequest {
   required uint32 room_id = 1;
   required bytes message_content = 2;
 }
@@ -56,3 +56,11 @@ message LeaveRoomRequest {
 message UserLeavedNtfy {
   required string user_id = 1;
 }
+
+message Ping {
+  required uint64 time_stamp = 1;
+}
+
+message KeepAliveRequest {}
+
+message KeepAliveResponse {}

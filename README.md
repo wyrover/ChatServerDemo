@@ -1,12 +1,14 @@
-本项目依赖下面几个库，请先编译安装好它们：
+### 编译本项目需要下面几个库，请先安装好它们：
+1. boost：主要使用了boost::asio
 
-* boost
+2. protobuf：服务端与客户端的消息格式
 
-* protobuf
+3. curl：服务端用来进行HTTP POST
 
-* curl
-
-* jsoncpp
+4. Visual Leak Detector：内存泄露检测，在windows上编译需要它
 
 
-你可以安装Python，运行`tests/ChatClient.py`测试
+### 运行时还依赖如下服务：
+
+1. [wapis](https://github.com/avexer/wapis "wapis")：目前服务端通过该web service进行登录认证
+

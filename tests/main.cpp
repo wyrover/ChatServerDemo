@@ -1,9 +1,11 @@
-﻿#include <iostream>
-#include <thread>
+﻿#include <thread>
+#include <iostream>
 #include <boost/asio.hpp>
 #include "ChatClient.h"
 
+#ifdef CHAT_SERVER_LOGGER
 _INITIALIZE_EASYLOGGINGPP
+#endif
 
 using boost::asio::ip::tcp;
 
@@ -17,7 +19,6 @@ void login(ChatClientPtr client) {
 }
 
 void logout(ChatClientPtr client) {
-  std::cout << "log out..." << std::endl;
   client->Logout();
 }
 
@@ -37,12 +38,19 @@ void enter_room(ChatClientPtr client) {
   client->EnterRoom(room_id, room_passwd);
 }
 
-void send_group_message(ChatClientPtr client) {
+void room_message(ChatClientPtr client) {
   room_id_t room_id;
   std::string message;
   std::cout << "input the room_id message:";
   std::cin >> room_id >> message;
-  client->SendGroupMessage(room_id, message.c_str(), message.size() + 1);
+  client->RoomMessage(room_id, message.c_str(), message.size() + 1);
+}
+
+void leave_room(ChatClientPtr client) {
+  room_id_t room_id;
+  std::cout << "input the room_id:";
+  std::cin >> room_id;
+  client->LeaveRoom(room_id);
 }
 
 void help() {
@@ -52,7 +60,9 @@ void help() {
 }
 
 int main(int argc, char* argv[]) {
+#ifdef CHAT_SERVER_LOGGER
   el::Loggers::reconfigureAllLoggers(el::Configurations("./easylogging_client.conf"));
+#endif
 
   boost::asio::io_service ios;
   tcp::resolver resolver(ios);
@@ -75,8 +85,10 @@ int main(int argc, char* argv[]) {
       creat_room(client);
     } else if (cmd == "enter_room") {
       enter_room(client);
-    } else if (cmd == "send_group_message") {
-      send_group_message(client);
+    } else if (cmd == "room_message") {
+      room_message(client);
+    } else if (cmd == "leave_room") {
+      leave_room(client);
     } else {
       help();
     }

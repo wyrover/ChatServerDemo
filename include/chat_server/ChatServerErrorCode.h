@@ -3,7 +3,7 @@
 
 #define ESUCCEED             0  /** 操作成功 */
 #define EFAILED             -1  /** 操作失败 */
-#define EINTNLSRVERR        -2  /** 内部服务器间调用错误 */
+#define EINTNLSRVFAULT      -2  /** 内部服务器间调用错误 */
 
 #define EROOMNAMEEXIST      -3  /** 房间名已存在 */
 #define EROOMPASSWDERR      -4  /** 房间密码错误，无法加入 */

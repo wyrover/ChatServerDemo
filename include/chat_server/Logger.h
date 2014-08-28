@@ -6,7 +6,7 @@
 #include <WinSock2.h>
 #endif
 #define _ELPP_THREAD_SAFE
-#include <avxer/easylogging++.h>
+#include <easylogging++.h>
 #define CS_LOG_DEBUG(args) LOG(DEBUG) << args
 #define CS_LOG_INFO(args)  LOG(INFO) << args
 #define CS_LOG_WARN(args)  LOG(WARNING) << args
