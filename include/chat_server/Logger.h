@@ -5,7 +5,9 @@
 #ifdef _MSC_VER
 #include <WinSock2.h>
 #endif
+#ifndef _ELPP_THREAD_SAFE
 #define _ELPP_THREAD_SAFE
+#endif
 #include <easylogging++.h>
 #define CS_LOG_DEBUG(args) LOG(DEBUG) << args
 #define CS_LOG_INFO(args)  LOG(INFO) << args

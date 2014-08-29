@@ -8,6 +8,16 @@
 4. Visual Leak Detector：内存泄露检测，在windows上编译需要它
 
 
+### 如何编译
+1. visual studio
+2. xcode
+3. gyp
+
+	`gyp --depth=. --generator-output=build`
+
+
+
+
 ### 运行时还依赖如下服务：
 
 1. [wapis](https://github.com/avexer/wapis "wapis")：目前服务端通过该web service进行登录认证
