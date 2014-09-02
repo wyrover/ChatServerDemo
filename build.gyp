@@ -101,7 +101,8 @@
             'link_settings': {
               'libraries': [
                 '-lprotobuf',
-                '-lboost_system'
+                '-lboost_system',
+                '-lpthread'
               ]
             }
           }
